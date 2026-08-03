@@ -1,0 +1,27 @@
+html,
+body {
+    margin: 0 auto;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    direction: rtl;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+    /* חשוב מאוד! */
+    Font-size: calc(10px + 0.5vw);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+#root {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
