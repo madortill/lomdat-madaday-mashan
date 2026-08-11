@@ -10,7 +10,7 @@ body {
     text-align: center;
     overflow: hidden;
     /* חשוב מאוד! */
-    Font-size: calc(10px + 0.5vw);
+    Font-size: calc(1vh + 0.5vw);
 }
 
 * {
@@ -24,4 +24,22 @@ body {
     display: flex;
     justify-content: center;
     align-items: flex-start;
+}
+.app {
+    min-height: 100vh;
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow: hidden;
+  }
+  
+  /* .app.opening {
+    background-image: url("../assets/images/backgrounds/opening.svg");
+  } */
+.til-icon {
+    position: fixed;
+    top: 1%;
+    left: 1%;
+    width: 3rem;
 }

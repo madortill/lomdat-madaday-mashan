@@ -1,0 +1,66 @@
+.office-scene {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: #ddf3ff;
+  }
+  
+  .office-scene__svg {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .office-scene__svg > svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: contain;
+  }
+  
+  /* Elements that should not exist visually yet. */
+  .office-scene .is-hidden {
+    display: none;
+  }
+  
+  /* Only the active stage receives clicks. */
+  .office-scene #notebook-highlight,
+  .office-scene #computer-click-target,
+  .office-scene #pens-highlight {
+    pointer-events: none;
+  }
+  
+  .office-scene .is-clickable {
+    pointer-events: all !important;
+    cursor: pointer;
+  }
+  
+  /* Blink only for the notebook first, then the pens. */
+  .office-scene .is-blinking {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: officePulse 1.05s ease-in-out infinite;
+  }
+  
+  @keyframes officePulse {
+    0%,
+    100% {
+      opacity: 0.45;
+    }
+  
+    50% {
+      opacity: 1;
+    }
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    .office-scene .is-blinking {
+      animation: none;
+      opacity: 1;
+    }
+  }
