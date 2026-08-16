@@ -1,0 +1,32 @@
+.notebook-div {
+  position: fixed;
+  inset: 0;
+
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: rgba(0, 0, 0, 0.6);
+
+  z-index: 1000;
+}
+
+/* המחברת עצמה */
+.notebook-div > svg {
+  width: auto;
+  height: 80vh;
+
+  max-width: 90vw;
+  max-height: 85vh;
+
+  display: block;
+}
+
+/* הכפתור שסוגר את המחברת */
+.notebook-close-btn {
+  cursor: pointer;
+  pointer-events: all;
+}

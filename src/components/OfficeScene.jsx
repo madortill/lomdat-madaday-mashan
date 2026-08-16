@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import officeSvg from "../assets/images/backgrounds/office-interactive.svg?raw";
 import "../css/OfficeScene.css";
+import Notebook from "../components/subjects/Notebook";
 
 const STEPS = {
   NOTEBOOK: 0,
@@ -15,6 +16,7 @@ function OfficeScene({
   onPensClick,
 }) {
   const [step, setStep] = useState(STEPS.NOTEBOOK);
+  const [isNotebookOpen, setIsNotebookOpen] = useState(false);
   const svgHostRef = useRef(null);
 
   // The SVG is a local trusted project asset.
@@ -28,19 +30,39 @@ function OfficeScene({
     const computer = host.querySelector("#computer-stage");
     const computerClickTarget = host.querySelector("#computer-click-target");
     const pens = host.querySelector("#pens-highlight");
+    const instructionBox = host.querySelector("#instruction-box");
+const notebookInstruction = host.querySelector("#notebook-instruction");
+const pensInstruction = host.querySelector("#pens-instruction");
 
     if (!notebook || !computer || !computerClickTarget || !pens) {
       console.warn("OfficeScene: one or more interactive SVG elements were not found.");
       return;
     }
 
-    // Visibility by stage.
-    notebook.classList.toggle("is-hidden", false);
-    computer.classList.toggle("is-hidden", step < STEPS.COMPUTER);
-    pens.classList.toggle("is-hidden", step < STEPS.PENS);
+   // Visibility by stage
+notebook.classList.toggle("is-hidden", false);
+computer.classList.toggle("is-hidden", step < STEPS.COMPUTER);
+pens.classList.toggle("is-hidden", step < STEPS.PENS);
+
+
+// Instruction box
+const showInstructionBox =
+  step === STEPS.NOTEBOOK ||
+  step === STEPS.PENS;
+
+instructionBox.style.display =
+  showInstructionBox ? "block" : "none";
+
+
+// Which text should appear inside the box
+notebookInstruction.style.display =
+  step === STEPS.NOTEBOOK ? "block" : "none";
+
+pensInstruction.style.display =
+  step === STEPS.PENS ? "block" : "none";
 
     // Only the current action is clickable.
-    notebook.classList.toggle("is-clickable", step === STEPS.NOTEBOOK);
+    notebook.classList.add("is-clickable");
     computerClickTarget.classList.toggle("is-clickable", step === STEPS.COMPUTER);
     pens.classList.toggle("is-clickable", step === STEPS.PENS);
 
@@ -49,9 +71,14 @@ function OfficeScene({
     pens.classList.toggle("is-blinking", step === STEPS.PENS);
 
     const handleNotebookClick = () => {
-      if (step !== STEPS.NOTEBOOK) return;
-      onNotebookClick?.();
-      setStep(STEPS.COMPUTER);
+      // תמיד אפשר לפתוח את המחברת
+      setIsNotebookOpen(true);
+    
+      // רק בפעם הראשונה ממשיכים לשלב המחשב
+      if (step === STEPS.NOTEBOOK) {
+        onNotebookClick?.();
+        setStep(STEPS.COMPUTER);
+      }
     };
 
     const handleComputerClick = () => {
@@ -84,6 +111,12 @@ function OfficeScene({
         className="office-scene__svg"
         dangerouslySetInnerHTML={svgMarkup}
       />
+  
+      {isNotebookOpen && (
+        <Notebook
+          onClose={() => setIsNotebookOpen(false)}
+        />
+      )}
     </div>
   );
 }

@@ -43,3 +43,21 @@ body {
     left: 1%;
     width: 3rem;
 }
+.bahad11-icon {
+    position: fixed;
+    top: 1%;
+    right: 1%;
+    width: 3rem;
+}
+@font-face {
+    font-family: "rubik";
+    src: url("../assets/fonts/Rubik-Regular.ttf") format("truetype");
+  }
+  @font-face {
+    font-family: "rubik-bold";
+    src: url("../assets/fonts/Rubik-Bold.ttf") format("truetype");
+  }
+  @font-face {
+    font-family: "secularOne";
+    src: url("../assets/fonts/SecularOne-Regular.ttf") format("truetype");
+  }
