@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import officeSvg from "../assets/images/backgrounds/office-interactive.svg?raw";
 import "../css/OfficeScene.css";
 import Notebook from "../components/subjects/Notebook";
+import ComputerScene from "../components/subjects/ComputerScene";
 
 const STEPS = {
   NOTEBOOK: 0,
@@ -18,6 +19,7 @@ function OfficeScene({
   const [step, setStep] = useState(STEPS.NOTEBOOK);
   const [isNotebookOpen, setIsNotebookOpen] = useState(false);
   const svgHostRef = useRef(null);
+  const [computerOpen, setComputerOpen] = useState(false);
 
   // The SVG is a local trusted project asset.
   const svgMarkup = useMemo(() => ({ __html: officeSvg }), []);
@@ -63,8 +65,14 @@ pensInstruction.style.display =
 
     // Only the current action is clickable.
     notebook.classList.add("is-clickable");
-    computerClickTarget.classList.toggle("is-clickable", step === STEPS.COMPUTER);
-    pens.classList.toggle("is-clickable", step === STEPS.PENS);
+    computerClickTarget.classList.toggle(
+      "is-clickable",
+      step >= STEPS.COMPUTER
+    );
+    pens.classList.toggle(
+      "is-clickable",
+      step >= STEPS.PENS
+    );
 
     // Blink only when the item is currently waiting for a click.
     notebook.classList.toggle("is-blinking", step === STEPS.NOTEBOOK);
@@ -82,15 +90,19 @@ pensInstruction.style.display =
     };
 
     const handleComputerClick = () => {
-      if (step !== STEPS.COMPUTER) return;
-      onComputerClick?.();
-      setStep(STEPS.PENS);
+      if (step < STEPS.COMPUTER) return;
+    
+      setComputerOpen(true);
     };
 
     const handlePensClick = () => {
-      if (step !== STEPS.PENS) return;
+      if (step < STEPS.PENS) return;
+    
       onPensClick?.();
-      setStep(STEPS.DONE);
+    
+      if (step === STEPS.PENS) {
+        setStep(STEPS.DONE);
+      }
     };
 
     notebook.addEventListener("click", handleNotebookClick);
@@ -117,6 +129,20 @@ pensInstruction.style.display =
           onClose={() => setIsNotebookOpen(false)}
         />
       )}
+      {computerOpen && (
+  <ComputerScene
+    onClose={() => {
+      setComputerOpen(false);
+    }}
+    onComplete={() => {
+      setComputerOpen(false);
+
+      if (step < STEPS.PENS) {
+        setStep(STEPS.PENS);
+      }
+    }}
+  />
+)}
     </div>
   );
 }

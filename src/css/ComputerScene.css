@@ -1,0 +1,202 @@
+.computer-scene {
+    position: fixed;
+    inset: 0;
+  
+    width: 100vw;
+    height: 100vh;
+  
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+    overflow: hidden;
+    background: #DDF3FF;
+  
+    z-index: 2000;
+  }
+  
+  
+  /* הקנבס של כל העיצוב */
+  .computer-stage {
+    position: relative;
+  
+    /* שומר בדיוק על היחס של העיצוב 1440x1024 */
+    width: min(100vw, calc(100vh * 1.40625));
+    aspect-ratio: 1440 / 1024;
+  
+    flex-shrink: 0;
+  
+    /* מאפשר לנו להקטין גם טקסט לפי גודל הקנבס */
+    container-type: inline-size;
+  }
+  
+  
+  /* רקע המחשב */
+  .computer-background {
+    position: absolute;
+    inset: 0;
+  
+    width: 100%;
+    height: 100%;
+  
+    display: block;
+  
+    z-index: 0;
+  }
+
+  .title-computer {
+    font-family: "rubik-bold";
+    color: #07435D;
+    font-size: 1.5rem;
+    padding: 0.5rem;
+    
+  }
+  .sec-title-computer {
+    font-family: "rubik";
+    font-weight: 700;
+    color: #07435D;
+    font-size: 1.3rem;
+    padding: 0.5rem;
+    text-align: start;
+  }
+  .text-computer {
+    font-family: "rubik";
+    color: #07435D;
+    font-size: 1.1rem;
+    padding: 0.5rem;
+    text-align: start;
+  }
+  .gears-animated {
+    width: 35rem;
+  }
+  .text-computer ul {
+    list-style-type: disc;
+    margin: 0;
+    padding-right: 25px;
+  }
+  
+  
+  /* האזור שבו התוכן מתחלף */
+  .computer-screen {
+    position: absolute;
+  
+    left: 10%;
+    top: 5%;
+  
+    width: 80%;
+    height: 56%;
+  
+    overflow: hidden;
+  
+    z-index: 2;
+  }
+  
+  
+  /* כל עמוד בתוך המסך */
+  .computer-page {
+    width: 100%;
+    height: 100%;
+  
+    box-sizing: border-box;
+  }
+  
+  
+  /* כפתור הבא */
+  .computer-next-btn {
+    position: absolute;
+    color: white;
+    background-color: #07435D;
+    left: 9.8%;
+    top: 66%;
+    font-family: "rubik-bold";
+    padding: 0.35rem 1rem;
+    z-index: 5;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+  .computer-next-btn:hover {
+    transform: scale(1.08);
+  }
+  
+  
+  /* כפתור חזור */
+  .computer-back-btn {
+    position: absolute;
+    color: white;
+    background-color: #0B5A7C;
+    right: 9.8%;
+    top: 66%;
+    font-family: "rubik-bold";
+    padding: 0.35rem 1rem;
+    z-index: 5;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.9rem;
+  
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+.computer-back-btn:hover {
+  transform: scale(1.08);
+}
+.logoMashan {
+    margin-top: 7rem;
+    width: 15rem;
+}
+.computer-character {
+    position: absolute;
+  
+    right: 0;
+    bottom: 0;
+  
+    width: 40%;
+  
+    z-index: 20;
+  }
+  
+  .computer-character-image {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  
+  .computer-character-image {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .computer-character-text {
+    position: absolute;
+  
+    top: 27%;
+    left: 20%;
+  
+    width: 40%;
+  
+    margin: 0;
+  
+    direction: rtl;
+    text-align: center;
+    font-family: "rubik";
+    font-size: 1rem;
+    line-height: 1.4;
+  
+    color: #084c6b;
+  
+    z-index: 2;
+  }
+  .character-regular {
+    font-family: "rubik";
+    font-size: 1rem;
+    margin: 0 0 5%;
+    line-height: 1.4;
+  }
+  
+  .character-bold {
+    font-family: "rubik-bold";
+    font-size: 1rem;
+    margin: 0;
+  }

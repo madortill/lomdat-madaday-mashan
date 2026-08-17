@@ -94,7 +94,7 @@
   .instruction-text {
     margin: 0;
   
-    font-size: 1.3rem;
+    font-size: 25px;
     line-height: 1;
     font-family: "rubik";
   }
@@ -102,6 +102,6 @@
   .instruction-bold {
     margin: 28px 0 0;
   
-    font-size: 1.5rem;
+    font-size: 30px;
     font-family: "rubik-bold";
   }
