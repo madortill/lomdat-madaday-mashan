@@ -1,0 +1,199 @@
+.exceptions-table-wrapper {
+  width: min(100%, 76rem);
+  margin: 0 auto;
+  direction: rtl;
+  font-family: "Assistant", "Rubik", sans-serif;
+  background-color: #ffffff;
+  border: 0.08rem solid #c8d1dc;
+  box-shadow: 0 0.15rem 0.7rem rgba(22, 43, 64, 0.16);
+}
+
+/* אזור הגלילה של הטבלה */
+.exceptions-table-scroll {
+  width: 100%;
+  max-height: 40rem;
+  overflow-y: auto;
+  overflow-x: auto;
+  scrollbar-gutter: stable;
+}
+
+.exceptions-table {
+  width: 100%;
+  min-width: 64rem;
+  border-collapse: separate;
+  border-spacing: 0;
+  table-layout: fixed;
+  color: #111111;
+}
+
+/* כותרות הטבלה נשארות למעלה בזמן גלילה */
+.exceptions-table thead {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+}
+
+.exceptions-table th {
+  height: 3.1rem;
+  padding: 0.55rem 0.7rem;
+  background-color: #ffffff;
+  border-left: 0.08rem solid #d2d7dd;
+  border-bottom: 0.1rem solid #bfc7d0;
+  font-size: 1rem;
+  font-weight: 800;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.exceptions-table th:last-child {
+  border-left: none;
+}
+
+.exception-name-column {
+  width: 22%;
+}
+
+.report-column {
+  width: 14%;
+}
+
+.exceptions-table th:not(.exception-name-column):not(.report-column) {
+  width: 16%;
+}
+
+/* שורות הקטגוריה */
+.category-row td {
+  height: 2.9rem;
+  padding: 0;
+  background: linear-gradient(
+    180deg,
+    #f9fcff 0%,
+    #eef5fc 100%
+  );
+  border-bottom: 0.08rem solid #ccd5df;
+}
+
+.category-row-secondary td {
+  background: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    #f3f7fb 100%
+  );
+}
+
+.category-row-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1rem;
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.category-arrow {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+/* שורות המידע */
+.exception-data-row td {
+  height: 5rem;
+  padding: 0.55rem 0.75rem;
+  background: linear-gradient(
+    180deg,
+    #f8fbff 0%,
+    #edf5fc 100%
+  );
+  border-left: 0.08rem solid #d3dce5;
+  border-bottom: 0.28rem solid #ffffff;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.exception-data-row td:last-child {
+  border-left: none;
+}
+
+.exception-data-row:hover td {
+  background: linear-gradient(
+    180deg,
+    #fbfdff 0%,
+    #f1f7fc 100%
+  );
+}
+
+/* אין סימון כחול של שורה נבחרת */
+.exception-data-row:focus,
+.exception-data-row:active {
+  background: transparent;
+}
+
+.exception-name-cell {
+  font-size: 1.05rem;
+  font-weight: 500;
+  line-height: 1.25;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+/* תא האייקון */
+.report-cell {
+  padding: 0 !important;
+}
+
+.report-button {
+  width: 100%;
+  height: 100%;
+  min-height: 4.7rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.report-button img {
+  width: 5rem;
+  height: 5rem;
+  object-fit: contain;
+  transition: transform 0.18s ease, opacity 0.18s ease;
+}
+
+.report-button:hover img {
+  transform: scale(1.18);
+}
+
+.report-button:active img {
+  transform: scale(0.95);
+}
+
+.report-button:focus-visible {
+  outline: 0.15rem solid #5a7185;
+  outline-offset: -0.3rem;
+}
+
+/* עיצוב פס הגלילה */
+.exceptions-table-scroll::-webkit-scrollbar {
+  width: 0.75rem;
+  height: 0.75rem;
+}
+
+.exceptions-table-scroll::-webkit-scrollbar-track {
+  background-color: #edf1f5;
+  border-radius: 1rem;
+}
+
+.exceptions-table-scroll::-webkit-scrollbar-thumb {
+  background-color: #a5adb6;
+  border: 0.15rem solid #edf1f5;
+  border-radius: 1rem;
+}
+
+.exceptions-table-scroll::-webkit-scrollbar-thumb:hover {
+  background-color: #858e98;
+}

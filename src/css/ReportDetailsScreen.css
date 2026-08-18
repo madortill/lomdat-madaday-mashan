@@ -1,0 +1,343 @@
+.report-details-screen {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  container-type: inline-size;
+}
+
+.report-details-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.report-details-svg > svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* -----------------------------
+   שם החריג
+------------------------------ */
+
+.report-details-exception-name {
+  position: absolute;
+  left: 59.7539%;
+  top: 22.0902%;
+  width: 35.0759%;
+  height: 3.5533%;
+  z-index: 10;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0 0.35rem;
+
+  direction: rtl;
+  text-align: center;
+
+  color: #111111;
+  font-family: "Rubik";
+  font-size: 1.2rem;
+  font-weight: 700;
+  line-height: 1;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  pointer-events: none;
+}
+
+.report-details-exception-name.is-long {
+  font-size: clamp(0.42rem, 0.68cqw, 0.7rem);
+}
+
+.report-details-exception-name.is-very-long {
+  font-size: clamp(0.36rem, 0.58cqw, 0.62rem);
+}
+
+/* -----------------------------
+   אזור הטבלה - גבוה יותר
+   גם למעלה וגם למטה
+------------------------------ */
+
+.report-details-table-area {
+  position: absolute;
+
+  left: 1.1535%;
+
+  /* היה בערך 32.24% */
+  top: 27%;
+
+  width: 94.688%;
+
+  /* היה בערך 42.47% */
+  height: 56%;
+
+  z-index: 8;
+
+  overflow: hidden;
+  background: #ffffff;
+}
+
+/* -----------------------------
+   DetailsTable
+------------------------------ */
+
+.report-details-table-area .details-table-component {
+  width: 100%;
+  height: 100%;
+  font-family: Arial, "Assistant", "Rubik", sans-serif;
+  color: #222;
+}
+
+.report-details-table-area .details-table-component * {
+  box-sizing: border-box;
+}
+
+.report-details-table-area .details-table-card {
+  width: 100%;
+  height: 100%;
+
+  background: #fff;
+
+  padding: 0.35rem;
+
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.report-details-table-area .details-table-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+
+  flex: 0 0 auto;
+
+  margin-bottom: 0.35rem;
+
+  direction: ltr;
+}
+
+.report-details-table-area .details-table-search {
+  flex: 1;
+  min-width: 9rem;
+
+  height: 2rem;
+
+  border: 1px solid #cfcfcf;
+  border-radius: 4px;
+
+  padding: 0 0.6rem;
+
+  direction: rtl;
+
+  background: #fff;
+  outline: none;
+
+  font-size: 0.76rem;
+}
+
+.report-details-table-area .details-table-search:focus {
+  border-color: #8ea98d;
+}
+
+/* -----------------------------
+   כפתור Excel עם זוהר כחול
+------------------------------ */
+
+.report-details-table-area .details-table-button {
+  height: 2rem;
+
+  border-radius: 4px;
+  border: 1px solid #cfcfcf;
+
+  padding: 0 0.8rem;
+
+  cursor: pointer;
+
+  font-size: 0.76rem;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+
+  white-space: nowrap;
+}
+
+.report-details-table-area .details-table-export {
+  color: #ffffff;
+
+  background: #2f8f38;
+  border-color: #2f8f38;
+
+  animation: excelBlueGlow 1.15s ease-in-out infinite;
+}
+
+.report-details-table-area .details-table-export:hover {
+  background: #287a30;
+}
+
+@keyframes excelBlueGlow {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 2px rgba(80, 194, 255, 0.25),
+      0 0 7px rgba(80, 194, 255, 0.45);
+  }
+
+  50% {
+    box-shadow:
+      0 0 0 3px rgba(80, 194, 255, 0.55),
+      0 0 14px rgba(80, 194, 255, 0.95);
+  }
+}
+
+/* -----------------------------
+   גלילת הטבלה
+------------------------------ */
+
+.report-details-table-area .details-table-scroll {
+  flex: 1 1 auto;
+
+  width: 100%;
+  min-height: 0;
+  max-height: none;
+
+  overflow-x: auto;
+  overflow-y: auto;
+
+  border: 1px solid #d8d8d8;
+
+  direction: rtl;
+
+  scrollbar-color: #8d8d8d #d8d8d8;
+}
+
+.report-details-table-area .details-table-scroll::-webkit-scrollbar {
+  height: 0.8rem;
+  width: 0.7rem;
+}
+
+.report-details-table-area .details-table-scroll::-webkit-scrollbar-track {
+  background: #d8d8d8;
+  border-radius: 1rem;
+}
+
+.report-details-table-area .details-table-scroll::-webkit-scrollbar-thumb {
+  background: #8d8d8d;
+  border-radius: 1rem;
+  border: 2px solid #d8d8d8;
+}
+
+/* -----------------------------
+   הטבלה עצמה
+------------------------------ */
+
+.report-details-table-area .details-table {
+  width: 100%;
+  min-width: 1500px;
+
+  border-collapse: collapse;
+  table-layout: fixed;
+
+  direction: rtl;
+}
+
+.report-details-table-area .details-table th,
+.report-details-table-area .details-table td {
+  height: 2.9rem;
+
+  border-left: 1px solid #b8c8b7;
+  border-bottom: 1px solid #b8c8b7;
+
+  text-align: center;
+  vertical-align: middle;
+
+  background: #ffffff;
+
+  font-size: 0.76rem;
+}
+
+.report-details-table-area .details-table th {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+
+  height: 2.35rem;
+
+  background: #f4f4f4;
+
+  font-weight: 600;
+
+  padding: 0;
+}
+
+.report-details-table-area .details-table-header {
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 0.35rem;
+
+  padding: 0 0.45rem;
+
+  white-space: nowrap;
+}
+
+.report-details-table-area .details-table-sort {
+  display: flex;
+  flex-direction: column;
+
+  gap: 0;
+
+  line-height: 0.5rem;
+
+  color: #777;
+
+  font-size: 0.55rem;
+
+  user-select: none;
+  cursor: pointer;
+
+  border: 0;
+  padding: 0;
+  background: transparent;
+}
+
+.report-details-table-area .details-table tbody tr:hover td {
+  background: #fbfdfb;
+}
+
+.report-details-table-area .details-table-empty {
+  height: 5rem;
+
+  color: #777;
+
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .report-details-table-area .details-table-export {
+    animation: none;
+
+    box-shadow:
+      0 0 0 3px rgba(80, 194, 255, 0.5),
+      0 0 10px rgba(80, 194, 255, 0.7);
+  }
+}
