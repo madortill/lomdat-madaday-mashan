@@ -190,7 +190,7 @@
 
 .system-table-area .exceptions-table {
   width: 100%;
-  min-width: 25rem;
+  min-width: 20rem;
   table-layout: fixed;
 }
 

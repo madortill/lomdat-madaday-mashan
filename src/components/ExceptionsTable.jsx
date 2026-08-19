@@ -20,7 +20,10 @@ const exceptionRows = [
   "ביצוע סיפוח מעל 70/90 יום - בייעוד עורפי/קדמי",
 ];
 
-function ExceptionsTable({ onReportClick }) {
+function ExceptionsTable({
+  onReportClick,
+  completedExceptions = [],
+}) {
   const handleReportClick = (row, index) => {
     if (onReportClick) {
       onReportClick(row, index);
@@ -73,34 +76,52 @@ function ExceptionsTable({ onReportClick }) {
               </td>
             </tr>
 
-            {exceptionRows.map((row, index) => (
-              <tr
-                className="exception-data-row"
-                key={`${row}-${index}`}
-              >
-                <td className="exception-name-cell">
-                  {row}
-                </td>
+            {exceptionRows.map((row, index) => {
+  const isCompleted =
+    completedExceptions.includes(row);
 
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+  return (
+    <tr
+      className={`exception-data-row ${
+        isCompleted ? "is-completed" : ""
+      }`}
+      key={`${row}-${index}`}
+    >
+      <td className="exception-name-cell">
+        {row}
+      </td>
 
-                <td className="report-cell">
-                  <button
-                    type="button"
-                    className="report-button"
-                    onClick={() =>
-                      handleReportClick(row, index)
-                    }
-                    aria-label={`פתיחת דוח פרטני עבור ${row}`}
-                  >
-                    <img src={reportIcon} alt="" />
-                  </button>
-                </td>
-              </tr>
-            ))}
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+
+      <td className="report-cell">
+        <div className="report-cell-content">
+          <button
+            type="button"
+            className="report-button"
+            onClick={() =>
+              handleReportClick(row, index)
+            }
+            aria-label={`פתיחת דוח פרטני עבור ${row}`}
+          >
+            <img src={reportIcon} alt="" />
+          </button>
+
+          {isCompleted && (
+            <span
+              className="report-completed-check"
+              aria-label="הדוח בוצע"
+            >
+              ✓
+            </span>
+          )}
+        </div>
+      </td>
+    </tr>
+  );
+})}
           </tbody>
         </table>
       </div>

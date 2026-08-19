@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import "../../css/ComputerScene.css";
 
 import InteractiveSystemScreen from "../../components/InteractiveSystemScreen";
@@ -11,16 +11,18 @@ import logoMashan from "../../assets/images/computer/logo-mashan.png";
 import Character from "../../assets/images/computer/Character.svg";
 
 const TOTAL_EXCEPTIONS = Object.keys(detailsData).length;
+
 const REQUIRED_SYSTEM_STEPS = [
   "circles",
   "graph",
   "report",
-
-  // בהמשך:
-  // "report-details",
-  // "another-button",
-  // "final-action",
 ];
+
+/*
+  כרגע אין עדיין שאלה פתוחה, לכן false.
+  כשנוסיף את השאלה יחד - נשנה ל-true ונחבר את onQuestionAnswered.
+*/
+const REQUIRE_OPEN_QUESTION = false;
 
 function ComputerScene({ onClose, onComplete }) {
   const [page, setPage] = useState(0);
@@ -28,9 +30,20 @@ function ComputerScene({ onClose, onComplete }) {
   // נשמר כאן כדי שלא יתאפס כשחוזרים אחורה/קדימה.
   const [visitedCircles, setVisitedCircles] = useState([]);
   const [tableOpen, setTableOpen] = useState(false);
+
   const [selectedException, setSelectedException] = useState(null);
-  const [completedExceptions, setCompletedExceptions] =
-  useState([]);
+
+  /*
+    חריגים שהושלמו באמת.
+    ה-✓ בטבלת החריגים מסתמך על הרשימה הזאת.
+  */
+  const [completedExceptions, setCompletedExceptions] = useState([]);
+
+  /*
+    התקדמות פנימית לכל חריג.
+    נשמרת גם אם פותחים את אותו חריג שוב.
+  */
+  const [exceptionProgress, setExceptionProgress] = useState({});
 
   const [systemPhase, setSystemPhase] = useState("circles");
   const [completedSystemSteps, setCompletedSystemSteps] = useState([]);
@@ -40,6 +53,30 @@ function ComputerScene({ onClose, onComplete }) {
   const systemComplete = REQUIRED_SYSTEM_STEPS.every((step) =>
     completedSystemSteps.includes(step)
   );
+
+  const selectedExceptionProgress = useMemo(() => {
+    if (!selectedException) {
+      return {
+        explanationViewed: false,
+        treatmentViewed: false,
+        questionAnswered: false,
+      };
+    }
+
+    return (
+      exceptionProgress[selectedException] ?? {
+        explanationViewed: false,
+        treatmentViewed: false,
+        questionAnswered: false,
+      }
+    );
+  }, [selectedException, exceptionProgress]);
+
+  const selectedExceptionComplete =
+    selectedExceptionProgress.explanationViewed &&
+    selectedExceptionProgress.treatmentViewed &&
+    (!REQUIRE_OPEN_QUESTION ||
+      selectedExceptionProgress.questionAnswered);
 
   const characterTexts = {
     1: {
@@ -66,12 +103,6 @@ function ComputerScene({ onClose, onComplete }) {
         bold: "גללו בטבלה ולחצו על דו״ח פרטני",
       },
 
-      report: {
-        regular:
-          "נוכל להוציא פלט עבור כל אחד מהנושאים החריגים בנפרד.",
-        bold: "המשיכו לפי ההנחיות במסך",
-      },
-
       complete: {
         regular:
           "מעולה! סיימתם את כל הפעולות בחלק הזה.",
@@ -85,9 +116,50 @@ function ComputerScene({ onClose, onComplete }) {
     },
   };
 
+  /*
+    טקסט דינמי לדמות בזמן שנמצאים בדו"ח.
+    אין ספירה - רק הנחיה לפי מה שכבר נפתח.
+  */
+  const reportCharacterText = useMemo(() => {
+    if (!selectedExceptionProgress.explanationViewed) {
+      return {
+        regular:
+          "לכל חריג מצורפים הסבר ואופן הטיפול בו.",
+        bold: "לחצו על הסבר חריג וקראו את הסבר החריג",
+      };
+    }
+
+    if (!selectedExceptionProgress.treatmentViewed) {
+      return {
+        regular:
+          "מעולה, עברתם על הסבר החריג.",
+        bold: "כעת פתחו וקראו גם את טיפול החריג",
+      };
+    }
+
+    if (
+      REQUIRE_OPEN_QUESTION &&
+      !selectedExceptionProgress.questionAnswered
+    ) {
+      return {
+        regular:
+          "מעולה, עברתם על ההסבר ועל אופן הטיפול.",
+        bold: "ענו על שאלת הסיכום כדי לסיים את החריג",
+      };
+    }
+
+    return {
+      regular:
+        "מעולה, סיימתם את הפעולות הנדרשות עבור החריג הזה.",
+      bold: "לחצו על חזרה לרשימת החריגים",
+    };
+  }, [selectedExceptionProgress]);
+
   const currentCharacterText =
     page === 2
-      ? characterTexts[2]?.[systemPhase]
+      ? selectedException
+        ? reportCharacterText
+        : characterTexts[2]?.[systemPhase]
       : characterTexts[page];
 
   const completeSystemStep = (step) => {
@@ -98,6 +170,73 @@ function ComputerScene({ onClose, onComplete }) {
 
       return [...prev, step];
     });
+  };
+
+  const updateSelectedExceptionProgress = (updates) => {
+    if (!selectedException) {
+      return;
+    }
+
+    setExceptionProgress((prev) => ({
+      ...prev,
+      [selectedException]: {
+        explanationViewed:
+          prev[selectedException]?.explanationViewed ?? false,
+        treatmentViewed:
+          prev[selectedException]?.treatmentViewed ?? false,
+        questionAnswered:
+          prev[selectedException]?.questionAnswered ?? false,
+        ...updates,
+      },
+    }));
+  };
+
+  const handleExplanationViewed = () => {
+    updateSelectedExceptionProgress({
+      explanationViewed: true,
+    });
+  };
+
+  const handleTreatmentViewed = () => {
+    updateSelectedExceptionProgress({
+      treatmentViewed: true,
+    });
+  };
+
+  /*
+    מוכן לשלב הבא:
+    כשנוסיף את השאלה הפתוחה, נקרא לפונקציה הזאת אחרי שליחה.
+  */
+  const handleQuestionAnswered = () => {
+    updateSelectedExceptionProgress({
+      questionAnswered: true,
+    });
+  };
+
+  const handleBackToExceptions = () => {
+    if (!selectedException || !selectedExceptionComplete) {
+      return;
+    }
+
+    /*
+      רק כאן החריג מסומן כ"הושלם",
+      ולכן רק עכשיו יופיע ✓ בטבלת החריגים.
+    */
+    setCompletedExceptions((prev) => {
+      if (prev.includes(selectedException)) {
+        return prev;
+      }
+
+      return [...prev, selectedException];
+    });
+
+    setSelectedException(null);
+
+    if (systemComplete) {
+      setSystemPhase("complete");
+    } else {
+      setSystemPhase("table");
+    }
   };
 
   useEffect(() => {
@@ -120,11 +259,14 @@ function ComputerScene({ onClose, onComplete }) {
     setSystemPhase("complete");
   }, [systemComplete]);
 
+  /*
+    שלב report נחשב גמור רק כאשר כל החריגים קיבלו ✓.
+  */
   useEffect(() => {
     if (completedExceptions.length < TOTAL_EXCEPTIONS) {
       return;
     }
-  
+
     completeSystemStep("report");
   }, [completedExceptions]);
 
@@ -145,22 +287,9 @@ function ComputerScene({ onClose, onComplete }) {
 
   const previousPage = () => {
     /*
-      אם נמצאים בתוך דו"ח פרטני,
-      "חזור" מחזיר קודם לטבלת החריגים,
-      בלי לאפס את ההתקדמות.
+      אין כאן יותר טיפול מיוחד בדו"ח פרטני.
+      בזמן דו"ח פרטני הכפתור הראשי "חזור" בכלל לא מוצג.
     */
-    if (page === 2 && selectedException) {
-      setSelectedException(null);
-
-      if (systemComplete) {
-        setSystemPhase("complete");
-      } else {
-        setSystemPhase("table");
-      }
-
-      return;
-    }
-
     if (page === 0) {
       onClose?.();
       return;
@@ -172,12 +301,18 @@ function ComputerScene({ onClose, onComplete }) {
   return (
     <div className="computer-scene">
       <div className="computer-stage">
-        <img src={computerBg} alt="" className="computer-background" />
+        <img
+          src={computerBg}
+          alt=""
+          className="computer-background"
+        />
 
         <div className="computer-screen">
           {page === 0 && (
             <div className="computer-page intro-page">
-              <p className="title-computer">קצת על המערכת</p>
+              <p className="title-computer">
+                קצת על המערכת
+              </p>
 
               <p className="text-computer">
                 חריג רשומת נוצר עקב אי -התאמה, תקלה או עבירה על חוקי הרשומת אשר
@@ -203,7 +338,9 @@ function ComputerScene({ onClose, onComplete }) {
                   <li>
                     ניתן לצפות בחריגי הרשומת הקיימים בכל עת דרך מערכת מדדי משא”ן
                   </li>
-                  <li>עבור כל חריג יופיע הסבר למהות החריג ובאופן הטיפול</li>
+                  <li>
+                    עבור כל חריג יופיע הסבר למהות החריג ובאופן הטיפול
+                  </li>
                 </ul>
               </div>
             </div>
@@ -211,7 +348,11 @@ function ComputerScene({ onClose, onComplete }) {
 
           {page === 1 && (
             <div className="computer-page">
-              <img src={logoMashan} alt="logoMashan" className="logoMashan" />
+              <img
+                src={logoMashan}
+                alt="logoMashan"
+                className="logoMashan"
+              />
             </div>
           )}
 
@@ -220,6 +361,12 @@ function ComputerScene({ onClose, onComplete }) {
               {selectedException ? (
                 <ReportDetailsScreen
                   exceptionName={selectedException}
+                  progress={selectedExceptionProgress}
+                  exceptionComplete={selectedExceptionComplete}
+                  onExplanationViewed={handleExplanationViewed}
+                  onTreatmentViewed={handleTreatmentViewed}
+                  onQuestionAnswered={handleQuestionAnswered}
+                  onBackToExceptions={handleBackToExceptions}
                 />
               ) : (
                 <InteractiveSystemScreen
@@ -227,27 +374,20 @@ function ComputerScene({ onClose, onComplete }) {
                   setVisitedCircles={setVisitedCircles}
                   tableOpen={tableOpen}
                   setTableOpen={setTableOpen}
+                  completedExceptions={completedExceptions}
                   onGraphOpen={() => {
                     completeSystemStep("graph");
                     setSystemPhase("table");
                   }}
                   onReportClick={(row, index) => {
                     console.log("נלחץ דוח", row, index);
-                  
-                    // פותחים את מסך הדוח של החריג שנבחר
+
+                    /*
+                      שימי לב:
+                      כאן כבר לא מסמנים את החריג כגמור.
+                      רק פותחים אותו.
+                    */
                     setSelectedException(row);
-                  
-                    // מסמנים שהמשתמש כבר עבר על החריג הזה
-                    setCompletedExceptions((prev) => {
-                      // אם כבר עברו עליו בעבר - לא מוסיפים שוב
-                      if (prev.includes(row)) {
-                        return prev;
-                      }
-                  
-                      return [...prev, row];
-                    });
-                  
-                    // עוברים להוראה של הדמות במסך הדוח
                     setSystemPhase("report");
                   }}
                 />
@@ -270,18 +410,32 @@ function ComputerScene({ onClose, onComplete }) {
           הבא
         </button>
 
-        <button className="computer-back-btn" onClick={previousPage}>
-          חזור
-        </button>
+        {/*
+          בזמן דו"ח פרטני הכפתור הראשי "חזור" נעלם.
+          החזרה נעשית רק מהכפתור הייעודי בתוך הדו"ח.
+        */}
+        {!(page === 2 && selectedException) && (
+          <button
+            className="computer-back-btn"
+            onClick={previousPage}
+          >
+            חזור
+          </button>
+        )}
 
         {page >= 1 && currentCharacterText && (
           <div className="computer-character">
-            <img src={Character} alt="" className="computer-character-image" />
+            <img
+              src={Character}
+              alt=""
+              className="computer-character-image"
+            />
 
             <div className="computer-character-text">
               <p className="character-regular">
                 {currentCharacterText.regular}
               </p>
+
               <p className="character-bold">
                 {currentCharacterText.bold}
               </p>

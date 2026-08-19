@@ -1,9 +1,4 @@
-import {
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 import "../css/InteractiveSystemScreen.css";
 
@@ -14,22 +9,19 @@ const CIRCLE_DATA = {
   "circle-click-1": {
     glowId: "circle-glow-1",
     title: "חריגים לציון",
-    text:
-      "כאן כתבי את ההסבר שיופיע בטול-טיפ של העיגול הראשון.",
+    text: "כאן כתבי את ההסבר שיופיע בטול-טיפ של העיגול הראשון.",
   },
 
   "circle-click-2": {
     glowId: "circle-glow-2",
     title: "חריגים בזמן טיפול",
-    text:
-      "כאן כתבי את ההסבר שיופיע בטול-טיפ של העיגול השני.",
+    text: "כאן כתבי את ההסבר שיופיע בטול-טיפ של העיגול השני.",
   },
 
   "circle-click-3": {
     glowId: "circle-glow-3",
     title: "סה״כ חריגים",
-    text:
-      "כאן כתבי את ההסבר שיופיע בטול-טיפ של העיגול השלישי.",
+    text: "כאן כתבי את ההסבר שיופיע בטול-טיפ של העיגול השלישי.",
   },
 };
 
@@ -40,6 +32,7 @@ function InteractiveSystemScreen({
   setVisitedCircles,
   tableOpen,
   setTableOpen,
+  completedExceptions = [],
   onGraphOpen,
   onReportClick,
 }) {
@@ -93,19 +86,14 @@ function InteractiveSystemScreen({
       const glow = host.querySelector(`#${content.glowId}`);
 
       if (!clickTarget) {
-        console.warn(
-          `InteractiveSystemScreen: לא נמצא #${clickId} בתוך ה-SVG`
-        );
+        console.warn(`InteractiveSystemScreen: לא נמצא #${clickId} בתוך ה-SVG`);
         return;
       }
 
       clickTarget.classList.add("svg-circle-click");
       clickTarget.setAttribute("role", "button");
       clickTarget.setAttribute("tabindex", "0");
-      clickTarget.setAttribute(
-        "aria-label",
-        `${content.title} - הצגת מידע`
-      );
+      clickTarget.setAttribute("aria-label", `${content.title} - הצגת מידע`);
 
       if (glow) {
         glow.classList.add("svg-glow", "svg-circle-glow");
@@ -178,13 +166,8 @@ function InteractiveSystemScreen({
           id: clickId,
           title: content.title,
           text: content.text,
-          x:
-            clickRect.left -
-            hostRect.left +
-            clickRect.width / 2,
-          y:
-            clickRect.top -
-            hostRect.top,
+          x: clickRect.left - hostRect.left + clickRect.width / 2,
+          y: clickRect.top - hostRect.top,
         });
       };
 
@@ -217,10 +200,7 @@ function InteractiveSystemScreen({
       const glow = host.querySelector(`#${content.glowId}`);
       if (!glow) return;
 
-      glow.classList.toggle(
-        "is-visited",
-        visitedCircles.includes(clickId)
-      );
+      glow.classList.toggle("is-visited", visitedCircles.includes(clickId));
     });
   }, [visitedCircles]);
 
@@ -241,10 +221,7 @@ function InteractiveSystemScreen({
     if (graphGlow) {
       graphGlow.classList.add("svg-glow", "svg-graph-glow");
 
-      graphGlow.classList.toggle(
-        "is-active",
-        allCirclesVisited && !tableOpen
-      );
+      graphGlow.classList.toggle("is-active", allCirclesVisited && !tableOpen);
     }
 
     graphClickTarget.classList.toggle(
@@ -257,10 +234,7 @@ function InteractiveSystemScreen({
       "tabindex",
       allCirclesVisited && !tableOpen ? "0" : "-1"
     );
-    graphClickTarget.setAttribute(
-      "aria-label",
-      "פתיחת טבלת החריגים"
-    );
+    graphClickTarget.setAttribute("aria-label", "פתיחת טבלת החריגים");
 
     const openTable = () => {
       if (!allCirclesVisited || tableOpen) {
@@ -288,12 +262,7 @@ function InteractiveSystemScreen({
       graphClickTarget.removeEventListener("click", openTable);
       graphClickTarget.removeEventListener("keydown", handleKeyDown);
     };
-  }, [
-    allCirclesVisited,
-    tableOpen,
-    setTableOpen,
-    onGraphOpen,
-  ]);
+  }, [allCirclesVisited, tableOpen, setTableOpen, onGraphOpen]);
 
   const handleReportClick = (row, index) => {
     onReportClick?.(row, index);
@@ -315,19 +284,16 @@ function InteractiveSystemScreen({
             top: tooltip.y,
           }}
         >
-          <p className="system-tooltip__title">
-            {tooltip.title}
-          </p>
+          <p className="system-tooltip__title">{tooltip.title}</p>
 
-          <p className="system-tooltip__text">
-            {tooltip.text}
-          </p>
+          <p className="system-tooltip__text">{tooltip.text}</p>
         </div>
       )}
 
       {tableOpen && (
         <div className="system-table-area">
           <ExceptionsTable
+            completedExceptions={completedExceptions}
             onReportClick={handleReportClick}
           />
         </div>
