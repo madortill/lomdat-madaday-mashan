@@ -190,14 +190,14 @@
   }
   .character-regular {
     font-family: "rubik";
-    font-size: 1rem;
+    font-size: 0.9rem;
     margin: 0 0 5%;
     line-height: 1.4;
   }
   
   .character-bold {
     font-family: "rubik-bold";
-    font-size: 1rem;
+    font-size: 0.95rem;
     margin: 0;
   }
   .computer-next-btn:disabled {

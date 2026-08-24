@@ -2,21 +2,25 @@ import { useMemo, useState } from "react";
 import "../css/ReportDetailsScreen.css";
 
 import reportDetailsSvg from "../assets/images/computer/report-details-screen.svg?raw";
+
 import DetailsTable from "./DetailsTable";
-import detailsData from "../data/exceptionDetailsData.json";
 import ExceptionExplanationModal from "./ExceptionExplanationModal";
+import ExceptionQuestionModal from "./ExceptionQuestionModal";
+
+import detailsData from "../data/exceptionDetailsData.json";
 
 function ReportDetailsScreen({
   exceptionName,
   progress,
-  exceptionComplete,
+  previousAnswer,
+  contentComplete,
   onExplanationViewed,
   onTreatmentViewed,
-  onQuestionAnswered,
+  onQuestionSubmit,
   onBackToExceptions,
 }) {
-  const [explanationOpen, setExplanationOpen] =
-    useState(false);
+  const [explanationOpen, setExplanationOpen] = useState(false);
+  const [questionOpen, setQuestionOpen] = useState(false);
 
   const svgMarkup = useMemo(
     () => ({
@@ -46,11 +50,28 @@ function ReportDetailsScreen({
         ? "is-long"
         : "";
 
+  const handleBackButtonClick = () => {
+    if (!contentComplete) {
+      return;
+    }
+
+    // אם כבר ענו בעבר - לא פותחים שוב את השאלה.
+    if (progress?.questionAnswered) {
+      onBackToExceptions?.();
+      return;
+    }
+
+    // בפעם הראשונה פותחים את השאלה.
+    setQuestionOpen(true);
+  };
+
+  const handleQuestionSubmit = (answer) => {
+    setQuestionOpen(false);
+    onQuestionSubmit?.(answer);
+  };
+
   return (
-    <div
-      className="report-details-screen"
-      dir="rtl"
-    >
+    <div className="report-details-screen" dir="rtl">
       <div
         className="report-details-svg"
         dangerouslySetInnerHTML={svgMarkup}
@@ -73,30 +94,23 @@ function ReportDetailsScreen({
       <button
         type="button"
         className="exception-explanation-button"
-        onClick={() =>
-          setExplanationOpen(true)
-        }
+        onClick={() => setExplanationOpen(true)}
       >
         הסבר
         <br />
         חריג
       </button>
 
-      {/*
-        הכפתור תמיד קיים, אבל נעול עד שסיימו את דרישות החריג.
-        כרגע: הסבר + טיפול.
-        כשנוסיף את השאלה, ComputerScene ידרוש גם questionAnswered.
-      */}
       <button
         type="button"
         className="back-to-exceptions-button"
-        disabled={!exceptionComplete}
-        onClick={onBackToExceptions}
+        disabled={!contentComplete}
+        onClick={handleBackButtonClick}
       >
         חזרה לרשימת החריגים
       </button>
 
-      {!exceptionComplete && (
+      {!contentComplete && (
         <div className="back-to-exceptions-hint">
           יש לעבור על הסבר החריג ועל הטיפול לפני החזרה
         </div>
@@ -110,17 +124,17 @@ function ReportDetailsScreen({
           progress={progress}
           onExplanationViewed={onExplanationViewed}
           onTreatmentViewed={onTreatmentViewed}
-          onClose={() =>
-            setExplanationOpen(false)
-          }
+          onClose={() => setExplanationOpen(false)}
         />
       )}
 
-      {/*
-        נקודת חיבור מוכנה לשאלה הפתוחה:
-        כשנוסיף אותה, היא תוכל לקרוא:
-        onQuestionAnswered()
-      */}
+      {questionOpen && !progress?.questionAnswered && (
+        <ExceptionQuestionModal
+          exceptionName={exceptionName}
+          initialAnswer={previousAnswer}
+          onSubmit={handleQuestionSubmit}
+        />
+      )}
     </div>
   );
 }

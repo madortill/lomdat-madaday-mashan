@@ -24,7 +24,9 @@ function ExceptionExplanationModal({
   */
   useEffect(() => {
     onExplanationViewed?.();
-  }, [onExplanationViewed]);
+    // ההסבר פתוח כברירת מחדל, ולכן מסמנים אותו פעם אחת בפתיחת החלון.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleExplanationClick = () => {
     const nextSection =
