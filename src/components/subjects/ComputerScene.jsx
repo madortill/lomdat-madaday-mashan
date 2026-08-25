@@ -9,6 +9,7 @@ import computerBg from "../../assets/images/backgrounds/computer.svg";
 import gearsAnimated from "../../assets/images/computer/gearsAnimated.svg";
 import logoMashan from "../../assets/images/computer/logo-mashan.png";
 import Character from "../../assets/images/computer/Character.svg";
+import pens from "../../assets/images/pens/Desktop - 32.svg"
 
 const TOTAL_EXCEPTIONS = Object.keys(detailsData).length;
 
@@ -30,7 +31,7 @@ const REQUIRED_SYSTEM_STEPS = [
    זה הדבר היחיד שצריך לשנות.
 ===================================================== */
 
-const DEBUG_MODE = false;
+const DEBUG_MODE = true;
 
 /* ===================================================== */
 
@@ -582,7 +583,7 @@ function ComputerScene({ onClose, onComplete }) {
 
           {page === 1 && (
             <div className="computer-page">
-
+              {/* <img src={pens} alt="pens" /> */}
               <img
                 src={logoMashan}
                 alt="logoMashan"

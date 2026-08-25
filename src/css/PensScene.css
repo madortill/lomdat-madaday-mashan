@@ -1,0 +1,239 @@
+.pens-scene {
+  position: absolute;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+
+  z-index: 100;
+}
+
+
+/* ==================================
+   הבמה של כל מסך העטים
+
+   זה בדיוק השטח של התמונה:
+   SVG + דמות + כפתורים
+================================== */
+
+.pens-scene-stage {
+  position: relative;
+
+  /*
+    יחס התמונה הוא 1440 / 1024.
+
+    אם המסך רחב - הגובה מגביל אותה.
+    אם המסך צר - הרוחב מגביל אותה.
+  */
+  width: min(100%, 140.625vh);
+
+  aspect-ratio: 1440 / 1024;
+
+  flex-shrink: 0;
+
+  overflow: hidden;
+}
+
+
+/* ==================================
+   ה-SVG
+================================== */
+
+.pens-scene-svg {
+  position: absolute;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  z-index: 1;
+}
+
+
+.pens-scene-svg > svg {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+}
+
+
+/* ==================================
+   אזורי העטים
+================================== */
+
+.pens-scene-svg .pen-hit,
+.pens-scene-svg .pen-hit * {
+  pointer-events: all;
+
+  cursor: pointer;
+
+  stroke: none !important;
+  filter: none !important;
+  outline: none;
+}
+
+
+/* בלי stroke ובלי glow ב-hover */
+
+.pens-scene-svg .pen-hit:hover,
+.pens-scene-svg .pen-hit:hover *,
+.pens-scene-svg .pen-hit:focus,
+.pens-scene-svg .pen-hit:focus * {
+  stroke: none !important;
+  filter: none !important;
+  outline: none !important;
+}
+
+
+/* ==================================
+   בועות
+================================== */
+
+.pens-scene-svg .pen-bubble {
+  opacity: 0;
+  visibility: hidden;
+
+  pointer-events: none;
+
+  transition: opacity 0.18s ease;
+}
+
+
+/* צהוב */
+
+.pens-scene[data-active-pen="yellow"]
+  .pens-scene-svg
+  #bubble-yellow {
+  opacity: 1;
+  visibility: visible;
+}
+
+
+/* ורוד */
+
+.pens-scene[data-active-pen="pink"]
+  .pens-scene-svg
+  #bubble-pink {
+  opacity: 1;
+  visibility: visible;
+}
+
+
+/* טורקיז */
+
+.pens-scene[data-active-pen="green-blue"]
+  .pens-scene-svg
+  #bubble-green-blue {
+  opacity: 1;
+  visibility: visible;
+}
+
+
+/* כחול */
+
+.pens-scene[data-active-pen="blue"]
+  .pens-scene-svg
+  #bubble-blue {
+  opacity: 1;
+  visibility: visible;
+}
+
+
+/* ירוק */
+
+.pens-scene[data-active-pen="green"]
+  .pens-scene-svg
+  #bubble-green {
+  opacity: 1;
+  visibility: visible;
+}
+
+
+/* ==================================
+   הדמות
+
+   עכשיו היא ממוקמת ביחס ל-stage,
+   כלומר ביחס לתמונה עצמה.
+================================== */
+
+.pens-scene-character {
+  position: absolute;
+
+  left: 0;
+  bottom: 0;
+
+  width: 26%;
+  height: auto;
+
+  z-index: 20;
+
+  pointer-events: none;
+  user-select: none;
+}
+
+
+/* ==================================
+   כפתור חזור
+================================== */
+
+/* =========================
+   כפתור חזור
+========================= */
+
+.pens-scene-back-button {
+  position: absolute;
+
+  top: 15%;
+  right: 3%;
+
+  z-index: 30;
+
+  min-width: 5rem;
+  height: 2rem;
+
+  padding: 0 1rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: none;
+  border-radius: 0.3rem;
+
+  background: #074b67;
+  color: #ffffff;
+
+  font-family: "rubik-bold";
+  font-size: 1.2rem;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.pens-scene-back-button:hover {
+  background: #063f57;
+}
+
+.pens-scene-back-button:active {
+  transform: scale(0.97);
+}
+
+/* .pens-scene-back-hit:focus-visible {
+  outline: 0.18rem solid #50c2ff;
+  outline-offset: 0.15rem;
+  border-radius: 0.3rem;
+} */
+
+
+@media (prefers-reduced-motion: reduce) {
+  .pens-scene-svg .pen-bubble {
+    transition: none;
+  }
+}
