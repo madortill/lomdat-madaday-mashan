@@ -197,6 +197,10 @@ function OfficeScene({
       "is-blinking",
       step === STEPS.NOTEBOOK
     );
+    computer.classList.toggle(
+      "is-glowing",
+      step === STEPS.COMPUTER
+    );
 
 
     pens.classList.toggle(

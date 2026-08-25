@@ -105,3 +105,24 @@
     font-size: 30px;
     font-family: "rubik-bold";
   }
+  .office-scene .is-glowing {
+    transform-box: fill-box;
+    transform-origin: center;
+  
+    animation: computerGlow 1.4s ease-in-out infinite;
+  }
+  
+  @keyframes computerGlow {
+    0%,
+    100% {
+      filter:
+        drop-shadow(0 0 0.25rem rgba(80, 194, 255, 0.45))
+        drop-shadow(0 0 0.5rem rgba(80, 194, 255, 0.25));
+    }
+  
+    50% {
+      filter:
+        drop-shadow(0 0 0.55rem rgba(80, 194, 255, 0.95))
+        drop-shadow(0 0 1rem rgba(80, 194, 255, 0.7));
+    }
+  }
