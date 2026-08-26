@@ -9,6 +9,7 @@ const PEN_IDS = ["yellow", "pink", "green-blue", "blue", "green"];
 function PensScene({ onBack, onComplete }) {
   const [activePen, setActivePen] = useState(null);
   const [visitedPens, setVisitedPens] = useState([]);
+  const svgHostRef = useRef(null);
 
   const completionSentRef = useRef(false);
 
@@ -21,6 +22,21 @@ function PensScene({ onBack, onComplete }) {
     }),
     []
   );
+
+  useEffect(() => {
+    const host = svgHostRef.current;
+  
+    if (!host) return;
+  
+    PEN_IDS.forEach((penId) => {
+      const check = host.querySelector(`#check-${penId}`);
+  
+      check?.classList.toggle(
+        "is-visited",
+        visitedPens.includes(penId)
+      );
+    });
+  }, [visitedPens]);
 
 
   const activatePen = (penId) => {
@@ -79,13 +95,15 @@ function PensScene({ onBack, onComplete }) {
       data-active-pen={activePen ?? ""}
       dir="rtl"
     >
+     
       <div className="pens-scene-stage">
   
         <div
-          className="pens-scene-svg"
-          dangerouslySetInnerHTML={svgMarkup}
-          onPointerOver={handlePointerOver}
-          onPointerOut={handlePointerOut}
+           ref={svgHostRef}
+  className="pens-scene-svg"
+  dangerouslySetInnerHTML={svgMarkup}
+  onPointerOver={handlePointerOver}
+  onPointerOut={handlePointerOut}
         />
   
         <img
@@ -93,7 +111,8 @@ function PensScene({ onBack, onComplete }) {
           alt=""
           className="pens-scene-character"
         />
-  
+        
+        <p className="title-pens">טיפים מקצועיים</p>
         {allPensVisited && (
           <button
             type="button"

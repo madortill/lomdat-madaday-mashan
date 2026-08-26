@@ -38,6 +38,10 @@ function OfficeScene({
   const [pensOpen, setPensOpen] =
     useState(false);
 
+  // שומר אם כבר לחצו לפחות פעם אחת על המחשב
+  const [computerWasClicked, setComputerWasClicked] =
+    useState(false);
+
   const svgHostRef = useRef(null);
 
 
@@ -75,6 +79,11 @@ function OfficeScene({
     const computerClickTarget =
       host.querySelector(
         "#computer-click-target"
+      );
+
+    const outerGearGlow =
+      host.querySelector(
+        "#computer-gear-outer-glow"
       );
 
     const pens =
@@ -190,19 +199,39 @@ function OfficeScene({
 
 
     /* =========================
-       הבהוב
+       אנימציות / זוהר
     ========================= */
 
+    // המחברת מהבהבת רק כשצריך ללחוץ עליה
     notebook.classList.toggle(
       "is-blinking",
       step === STEPS.NOTEBOOK
     );
-    computer.classList.toggle(
-      "is-glowing",
-      step === STEPS.COMPUTER
+
+
+    /*
+      גלגל השיניים:
+
+      לפני שלחצו על המחשב:
+      זוהר בפעימות.
+
+      אחרי שלחצו:
+      נשאר זוהר קבוע.
+    */
+
+    outerGearGlow?.classList.toggle(
+      "is-active",
+      step === STEPS.COMPUTER &&
+        !computerWasClicked
+    );
+
+    outerGearGlow?.classList.toggle(
+      "is-static",
+      computerWasClicked
     );
 
 
+    // העטים מהבהבים כשמגיעים אליהם
     pens.classList.toggle(
       "is-blinking",
       step === STEPS.PENS
@@ -240,9 +269,15 @@ function OfficeScene({
         return;
       }
 
-      setComputerOpen(true);
+      /*
+        מהרגע שלחצו פעם אחת,
+        הזוהר המהבהב הופך לזוהר קבוע.
+      */
+      setComputerWasClicked(true);
 
       onComputerClick?.();
+
+      setComputerOpen(true);
     };
 
 
@@ -260,7 +295,7 @@ function OfficeScene({
       /*
         כאן לא מסמנים DONE.
 
-        אנחנו רק פותחים את PensScene.
+        רק פותחים את PensScene.
 
         רק אחרי שעברו על כל
         חמשת העטים PensScene
@@ -314,6 +349,7 @@ function OfficeScene({
     };
   }, [
     step,
+    computerWasClicked,
     onNotebookClick,
     onComputerClick,
     onPensClick,
@@ -383,17 +419,21 @@ function OfficeScene({
       ========================= */}
 
       {pensOpen && (
-       <PensScene
-       onBack={() => {
-         setPensOpen(false);
-       }}
-     
-       onComplete={() => {
-         if (step < STEPS.DONE) {
-           setStep(STEPS.DONE);
-         }
-       }}
-     />
+        <PensScene
+          onBack={() => {
+            setPensOpen(false);
+          }}
+
+          onComplete={() => {
+            if (
+              step < STEPS.DONE
+            ) {
+              setStep(
+                STEPS.DONE
+              );
+            }
+          }}
+        />
       )}
 
     </div>

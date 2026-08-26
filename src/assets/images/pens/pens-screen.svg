@@ -57,6 +57,77 @@
   />
 </svg>
 
+<g id="check-yellow" class="pen-check-svg">
+  <circle cx="1045" cy="686" r="15" fill="#63c75a"/>
+  <text
+    x="1045"
+    y="692"
+    text-anchor="middle"
+    font-size="20"
+    font-weight="700"
+    fill="white"
+  >
+    ✓
+  </text>
+</g>
+
+<g id="check-pink" class="pen-check-svg">
+  <circle cx="1105" cy="555" r="15" fill="#63c75a"/>
+  <text
+    x="1105"
+    y="561"
+    text-anchor="middle"
+    font-size="20"
+    font-weight="700"
+    fill="white"
+  >
+    ✓
+  </text>
+</g>
+
+<g id="check-green-blue" class="pen-check-svg">
+  <circle cx="1200" cy="475" r="15" fill="#63c75a"/>
+  <text
+    x="1200"
+    y="481"
+    text-anchor="middle"
+    font-size="20"
+    font-weight="700"
+    fill="white"
+  >
+    ✓
+  </text>
+</g>
+
+<g id="check-blue" class="pen-check-svg">
+  <circle cx="1125" cy="285" r="15" fill="#63c75a"/>
+  <text
+    x="1125"
+    y="291"
+    text-anchor="middle"
+    font-size="20"
+    font-weight="700"
+    fill="white"
+  >
+    ✓
+  </text>
+</g>
+
+<g id="check-green" class="pen-check-svg">
+  <circle cx="1170" cy="365" r="15" fill="#63c75a"/>
+  <text
+    x="1170"
+    y="371"
+    text-anchor="middle"
+    font-size="20"
+    font-weight="700"
+    fill="white"
+  >
+    ✓
+  </text>
+</g>
+
+
 <!-- yellow pen -->
 <g id="bubble-yellow" class="pen-bubble">
 <rect x="554" y="580" width="353" height="133" rx="7" fill="#DDF3FF"/>

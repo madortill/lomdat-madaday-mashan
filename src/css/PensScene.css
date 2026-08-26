@@ -101,7 +101,7 @@
   visibility: hidden;
 
   pointer-events: none;
-
+ z-index: 2;
   transition: opacity 0.18s ease;
 }
 
@@ -155,6 +155,16 @@
   visibility: visible;
 }
 
+.pens-scene-svg .pen-check-svg {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.pens-scene-svg .pen-check-svg.is-visited {
+  opacity: 1;
+  visibility: visible;
+}
 
 /* ==================================
    הדמות
@@ -231,9 +241,102 @@
   border-radius: 0.3rem;
 } */
 
+.title-pens {
+  position: absolute;
 
+  top: 18%;
+  right: 30%;
+
+  z-index: 30;
+
+  min-width: 5rem;
+  height: 2rem;
+
+  padding: 0 1rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: none;
+  border-radius: 0.3rem;
+
+  /* background: #edf9ffc4; */
+  color: #ffffff;
+
+  font-family: "rubik-bold";
+  font-size: 2rem;
+  font-weight: 700;
+  /* transform: rotate(-19deg); */
+
+  cursor: pointer;
+}
+.pen-check {
+  position: absolute;
+
+  z-index: 1;
+
+  width: 1.6rem;
+  height: 1.6rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #63c75a;
+  color: #ffffff;
+
+  font-family: "Rubik";
+  font-size: 1.1rem;
+  font-weight: 700;
+
+  box-shadow: 0 0.1rem 0.3rem rgba(0, 0, 0, 0.18);
+
+  pointer-events: none;
+
+  animation: penCheckAppear 0.2s ease-out;
+}
+
+@keyframes penCheckAppear {
+  from {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.pen-check--yellow {
+  left: 72%;
+  top: 66%;
+}
+
+.pen-check--pink {
+  left: 76%;
+  top: 51.5%;
+}
+
+.pen-check--green-blue {
+  left: 82.5%;
+  top: 42.5%;
+}
+
+.pen-check--blue {
+  left: 78%;
+  top: 22%;
+}
+
+.pen-check--green {
+  left: 81%;
+  top: 32.8%;
+}
 @media (prefers-reduced-motion: reduce) {
   .pens-scene-svg .pen-bubble {
     transition: none;
   }
 }
+

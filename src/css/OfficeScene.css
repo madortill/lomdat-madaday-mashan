@@ -1,128 +1,239 @@
 .office-scene {
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    background: #DDF3FF;
-  
-    position: relative;
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+
+  background: #DDF3FF;
+
+  position: relative;
+}
+
+
+.office-scene__svg {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.office-scene__svg > svg {
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  object-fit: contain;
+}
+
+
+/* =========================
+   הסתרה
+========================= */
+
+.office-scene .is-hidden {
+  display: none;
+}
+
+
+/* =========================
+   לחיצות
+========================= */
+
+.office-scene #notebook-highlight,
+.office-scene #computer-click-target,
+.office-scene #pens-highlight {
+  pointer-events: none;
+}
+
+
+.office-scene .is-clickable {
+  pointer-events: all !important;
+  cursor: pointer;
+}
+
+
+/* =========================
+   הבהוב של המחברת והעטים
+========================= */
+
+.office-scene .is-blinking {
+  transform-box: fill-box;
+  transform-origin: center;
+
+  animation:
+    officePulse 1.05s ease-in-out infinite;
+}
+
+
+@keyframes officePulse {
+  0%,
+  100% {
+    opacity: 0.45;
   }
-  
-  .office-scene__svg {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+
+  50% {
+    opacity: 1;
   }
-  
-  .office-scene__svg > svg {
-    width: 100%;
-    height: 100%;
-    display: block;
-    object-fit: contain;
+}
+
+
+/* =========================
+   בועת הוראות
+========================= */
+
+.instruction-card {
+  width: 100%;
+  height: 100%;
+
+  box-sizing: border-box;
+
+  background-color: #DDF3FF;
+  border-radius: 20px;
+
+  padding: 30px 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  direction: rtl;
+  text-align: center;
+
+  color: #07435D;
+}
+
+
+.instruction-content {
+  width: 100%;
+}
+
+
+.instruction-text {
+  margin: 0;
+
+  font-size: 25px;
+  line-height: 1;
+
+  font-family: "rubik";
+}
+
+
+.instruction-bold {
+  margin: 28px 0 0;
+
+  font-size: 30px;
+
+  font-family: "rubik-bold";
+}
+
+
+/* ==========================================
+   גלגל השיניים של המחשב
+========================================== */
+
+/*
+  ברירת מחדל:
+  לא רואים את שכבת הזוהר.
+*/
+
+.computer-gear-glow {
+  opacity: 0;
+
+  pointer-events: none;
+
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+
+/*
+  לפני שלחצו על המחשב:
+  זוהר בפעימות.
+*/
+
+.computer-gear-glow.is-active {
+  opacity: 1;
+
+  animation:
+    gearGlowPulse 1.1s ease-in-out infinite;
+
+  filter:
+    drop-shadow(
+      0 0 0.2rem
+      rgba(99, 212, 255, 0.45)
+    )
+    drop-shadow(
+      0 0 0.45rem
+      rgba(99, 212, 255, 0.8)
+    )
+    drop-shadow(
+      0 0 0.9rem
+      rgba(99, 212, 255, 1)
+    );
+}
+
+
+/*
+  אחרי שלחצו פעם אחת:
+  הזוהר נשאר,
+  אבל מפסיק להבהב.
+*/
+
+.computer-gear-glow.is-static {
+  opacity: 1;
+
+  animation: none;
+
+  filter:
+    drop-shadow(
+      0 0 0.2rem
+      rgba(99, 212, 255, 0.55)
+    )
+    drop-shadow(
+      0 0 0.45rem
+      rgba(99, 212, 255, 0.65)
+    )
+    drop-shadow(
+      0 0 0.75rem
+      rgba(99, 212, 255, 0.75)
+    );
+}
+
+
+/* פעימת הזוהר */
+
+@keyframes gearGlowPulse {
+  0%,
+  100% {
+    opacity: 0.35;
   }
-  
-  /* Elements that should not exist visually yet. */
-  .office-scene .is-hidden {
-    display: none;
+
+  50% {
+    opacity: 1;
   }
-  
-  /* Only the active stage receives clicks. */
-  .office-scene #notebook-highlight,
-  .office-scene #computer-click-target,
-  .office-scene #pens-highlight {
-    pointer-events: none;
-  }
-  
-  .office-scene .is-clickable {
-    pointer-events: all !important;
-    cursor: pointer;
-  }
-  
-  /* Blink only for the notebook first, then the pens. */
+}
+
+
+/* =========================
+   נגישות - פחות אנימציות
+========================= */
+
+@media (prefers-reduced-motion: reduce) {
   .office-scene .is-blinking {
-    transform-box: fill-box;
-    transform-origin: center;
-    animation: officePulse 1.05s ease-in-out infinite;
+    animation: none;
+    opacity: 1;
   }
-  
-  @keyframes officePulse {
-    0%,
-    100% {
-      opacity: 0.45;
-    }
-  
-    50% {
-      opacity: 1;
-    }
+
+  .computer-gear-glow.is-active {
+    animation: none;
+    opacity: 1;
   }
-  
-  @media (prefers-reduced-motion: reduce) {
-    .office-scene .is-blinking {
-      animation: none;
-      opacity: 1;
-    }
-  }
-  .instruction-card {
-    width: 100%;
-    height: 100%;
-  
-    box-sizing: border-box;
-  
-    background-color: #DDF3FF;
-    border-radius: 20px;
-  
-    padding: 30px 20px;
-  
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  
-    direction: rtl;
-    text-align: center;
-  
-    color: #07435D;
-  }
-  
-  .instruction-content {
-    width: 100%;
-  }
-  
-  .instruction-text {
-    margin: 0;
-  
-    font-size: 25px;
-    line-height: 1;
-    font-family: "rubik";
-  }
-  
-  .instruction-bold {
-    margin: 28px 0 0;
-  
-    font-size: 30px;
-    font-family: "rubik-bold";
-  }
-  .office-scene .is-glowing {
-    transform-box: fill-box;
-    transform-origin: center;
-  
-    animation: computerGlow 1.4s ease-in-out infinite;
-  }
-  
-  @keyframes computerGlow {
-    0%,
-    100% {
-      filter:
-        drop-shadow(0 0 0.25rem rgba(80, 194, 255, 0.45))
-        drop-shadow(0 0 0.5rem rgba(80, 194, 255, 0.25));
-    }
-  
-    50% {
-      filter:
-        drop-shadow(0 0 0.55rem rgba(80, 194, 255, 0.95))
-        drop-shadow(0 0 1rem rgba(80, 194, 255, 0.7));
-    }
-  }
+}
