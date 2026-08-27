@@ -25,6 +25,7 @@ function OfficeScene({
   onNotebookClick,
   onComputerClick,
   onPensClick,
+  onCourseComplete,
 }) {
   const [step, setStep] =
     useState(STEPS.NOTEBOOK);
@@ -418,23 +419,41 @@ function OfficeScene({
           עטים
       ========================= */}
 
-      {pensOpen && (
-        <PensScene
-          onBack={() => {
-            setPensOpen(false);
-          }}
+{pensOpen && (
+  <PensScene
 
-          onComplete={() => {
-            if (
-              step < STEPS.DONE
-            ) {
-              setStep(
-                STEPS.DONE
-              );
-            }
-          }}
-        />
-      )}
+    onBack={() => {
+      setPensOpen(false);
+
+      /*
+        רק אם כבר עברו על כל העטים,
+        לחיצה על "חזור" מסיימת את הלומדה.
+      */
+      if (step === STEPS.DONE) {
+        onCourseComplete?.();
+      }
+    }}
+
+    onComplete={() => {
+      /*
+        עברו על כל חמשת העטים.
+
+        אנחנו עדיין לא יוצאים מהמסך,
+        רק מסמנים שהכול הסתיים.
+
+        המשתמשת עדיין צריכה ללחוץ "חזור".
+      */
+      if (
+        step < STEPS.DONE
+      ) {
+        setStep(
+          STEPS.DONE
+        );
+      }
+    }}
+
+  />
+)}
 
     </div>
   );

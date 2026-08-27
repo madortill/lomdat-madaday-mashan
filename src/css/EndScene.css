@@ -1,0 +1,122 @@
+.end-scene {
+    position: fixed;
+    inset: 0;
+  
+    width: 100vw;
+    height: 100vh;
+  
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+    overflow: hidden;
+  
+    background: #ddf3ff;
+  
+    z-index: 1000;
+  }
+  
+  
+  /* =================================
+     הבמה
+  
+     שומרת תמיד על יחס 1440x1024
+  ================================= */
+  
+  .end-scene-stage {
+    position: relative;
+  
+    width: min(100%, 140.625vh);
+  
+    aspect-ratio: 1440 / 1024;
+  
+    flex-shrink: 0;
+  
+    overflow: hidden;
+  }
+  
+  
+  /* =================================
+     רקע
+  ================================= */
+  
+  .end-scene-background {
+    position: absolute;
+    inset: 0;
+  
+    width: 100%;
+    height: 100%;
+  
+    display: block;
+  
+    object-fit: fill;
+  
+    pointer-events: none;
+    user-select: none;
+  }
+  
+  
+  /* =================================
+     כפתורים
+  ================================= */
+  
+  .end-scene-button {
+    position: absolute;
+  
+    padding: 0;
+    margin: 0;
+  
+    border: none;
+    background: transparent;
+  
+    cursor: pointer;
+  
+    z-index: 10;
+  }
+  
+  
+  .end-scene-button img {
+    display: block;
+  
+    width: 100%;
+    height: 100%;
+  
+    object-fit: contain;
+  
+    pointer-events: none;
+  }
+  
+  
+  /* מההתחלה - שמאל למטה */
+  
+  .end-scene-button--restart {
+    left: 1.4%;
+    bottom: 13.5%;
+  
+    width: 21.7%;
+  }
+  
+  
+  /* לחזור ללמוד - ימין למטה */
+  
+  .end-scene-button--continue {
+    right: 1.3%;
+    bottom: 12%;
+  
+    width: 13.55%;
+  }
+  
+  
+  /* hover קטן ועדין */
+  
+  .end-scene-button {
+    transition: transform 0.15s ease;
+  }
+  
+  .end-scene-button:hover {
+    transform: scale(1.03);
+  }
+  
+  .end-scene-button:active {
+    transform: scale(0.97);
+  }
