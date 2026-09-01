@@ -430,17 +430,17 @@
 .back-to-exceptions-hint {
   position: absolute;
 
-  left: 3%;
+  right: 35%;
   bottom: 0.6%;
 
   z-index: 20;
 
-  width: 15rem;
+  width: 30%;
 
   color: #555;
 
   font-family: "Rubik";
-  font-size: 0.58rem;
+  font-size: 0.8rem;
   font-weight: 500;
 
   text-align: center;
@@ -470,8 +470,8 @@
 ========================= */
 
 .exception-modal {
-  width: 48%;
-  min-height: 70%;
+  width: 58%;
+  min-height: 90%;
 
   background: #ffffff;
 
@@ -626,6 +626,8 @@
 
   text-align: right;
 }
+
+
 /* =========================================================
    שאלה פתוחה
 ========================================================= */

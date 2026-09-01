@@ -15,8 +15,7 @@ function ExceptionExplanationModal({
   /*
     ההסבר פתוח כברירת מחדל, כמו בעיצוב שלך.
   */
-  const [openSection, setOpenSection] =
-    useState("explanation");
+  const [openSection, setOpenSection] = useState("explanation");
 
   /*
     מאחר שההסבר פתוח מיד כשהחלון נפתח,
@@ -29,10 +28,7 @@ function ExceptionExplanationModal({
   }, []);
 
   const handleExplanationClick = () => {
-    const nextSection =
-      openSection === "explanation"
-        ? null
-        : "explanation";
+    const nextSection = openSection === "explanation" ? null : "explanation";
 
     setOpenSection(nextSection);
 
@@ -42,10 +38,7 @@ function ExceptionExplanationModal({
   };
 
   const handleTreatmentClick = () => {
-    const nextSection =
-      openSection === "treatment"
-        ? null
-        : "treatment";
+    const nextSection = openSection === "treatment" ? null : "treatment";
 
     setOpenSection(nextSection);
 
@@ -55,10 +48,7 @@ function ExceptionExplanationModal({
   };
 
   return (
-    <div
-      className="exception-modal-overlay"
-      dir="rtl"
-    >
+    <div className="exception-modal-overlay" dir="rtl">
       <div className="exception-modal">
         <div className="exception-modal-header">
           <button
@@ -70,24 +60,19 @@ function ExceptionExplanationModal({
             ×
           </button>
 
-          <h2 className="exception-modal-name">
-            {exceptionName}
-          </h2>
+          <h2 className="exception-modal-name">{exceptionName}</h2>
         </div>
 
         <div className="exception-accordion">
           <button
             type="button"
             className={`exception-accordion-header ${
-              openSection === "explanation"
-                ? "is-open"
-                : ""
+              openSection === "explanation" ? "is-open" : ""
             }`}
             onClick={handleExplanationClick}
           >
             <span className="exception-accordion-title">
               הסבר החריג
-
               {progress?.explanationViewed && (
                 <span
                   className="exception-section-check"
@@ -99,11 +84,7 @@ function ExceptionExplanationModal({
             </span>
 
             <img
-              src={
-                openSection === "explanation"
-                  ? arrowOpen
-                  : arrowClosed
-              }
+              src={openSection === "explanation" ? arrowOpen : arrowClosed}
               alt=""
               className="exception-accordion-arrow"
             />
@@ -111,8 +92,13 @@ function ExceptionExplanationModal({
 
           {openSection === "explanation" && (
             <div className="exception-accordion-content">
-              {explanation ||
-                "כאן יופיע הסבר החריג."}
+              {Array.isArray(explanation)
+                ? explanation.map((item, index) => (
+                    <div key={index} className="exception-explanation-line">
+                      {item}
+                    </div>
+                  ))
+                : explanation || "כאן יופיע הסבר החריג."}
             </div>
           )}
         </div>
@@ -121,15 +107,12 @@ function ExceptionExplanationModal({
           <button
             type="button"
             className={`exception-accordion-header ${
-              openSection === "treatment"
-                ? "is-open"
-                : ""
+              openSection === "treatment" ? "is-open" : ""
             }`}
             onClick={handleTreatmentClick}
           >
             <span className="exception-accordion-title">
               טיפול החריג
-
               {progress?.treatmentViewed && (
                 <span
                   className="exception-section-check"
@@ -141,11 +124,7 @@ function ExceptionExplanationModal({
             </span>
 
             <img
-              src={
-                openSection === "treatment"
-                  ? arrowOpen
-                  : arrowClosed
-              }
+              src={openSection === "treatment" ? arrowOpen : arrowClosed}
               alt=""
               className="exception-accordion-arrow"
             />
@@ -153,10 +132,46 @@ function ExceptionExplanationModal({
 
           {openSection === "treatment" && (
             <div className="exception-accordion-content">
-              {treatment ||
-                "כאן יופיע אופן הטיפול בחריג."}
+              {Array.isArray(treatment)
+                ? treatment.map((item, index) => (
+                    <div key={index} className="exception-treatment-line">
+                      {item}
+                    </div>
+                  ))
+                : treatment || "כאן יופיע אופן הטיפול בחריג."}
             </div>
           )}
+
+{flowchart && (
+  <button
+    type="button"
+    className="show-flowchart-button"
+    onClick={() => setShowFlowchart(true)}
+  >
+    להצגת תרשים הזרימה
+  </button>
+)}
+{showFlowchart && (
+  <div className="flowchart-overlay">
+    <div className="flowchart-modal">
+
+      <button
+        type="button"
+        className="flowchart-close"
+        onClick={() => setShowFlowchart(false)}
+      >
+        ×
+      </button>
+
+      <img
+        src={flowchart}
+        alt="תרשים זרימה"
+        className="flowchart-image"
+      />
+
+    </div>
+  </div>
+)}
         </div>
       </div>
     </div>
