@@ -19,6 +19,7 @@
   /* הקנבס של כל העיצוב */
   .computer-stage {
     position: relative;
+    line-height: 140%;
   
     /* שומר בדיוק על היחס של העיצוב 1440x1024 */
     width: min(100vw, calc(100vh * 1.40625));
@@ -47,7 +48,7 @@
   .title-computer {
     font-family: "rubik-bold";
     color: #07435D;
-    font-size: 1.5rem;
+    font-size: 2rem;
     padding: 0.5rem;
     
   }
@@ -56,15 +57,16 @@
     font-weight: 700;
     color: #07435D;
     font-size: 1.3rem;
-    padding: 0.5rem;
+    padding: 2rem;
     text-align: start;
   }
   .text-computer {
     font-family: "rubik";
     color: #07435D;
     font-size: 1.1rem;
-    padding: 0.5rem;
+    padding: 0.5rem 2rem;
     text-align: start;
+    line-height: 140%;
   }
   .gears-animated {
     width: 35rem;

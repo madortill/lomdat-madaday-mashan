@@ -200,13 +200,13 @@
 .pens-scene-back-button {
   position: absolute;
 
-  top: 15%;
+  bottom: 10%;
   right: 3%;
 
   z-index: 30;
 
-  min-width: 5rem;
-  height: 2rem;
+  min-width: 7rem;
+  height: 3rem;
 
   padding: 0 1rem;
 
@@ -221,7 +221,7 @@
   color: #ffffff;
 
   font-family: "rubik-bold";
-  font-size: 1.2rem;
+  font-size: 1.8rem;
   font-weight: 700;
 
   cursor: pointer;
