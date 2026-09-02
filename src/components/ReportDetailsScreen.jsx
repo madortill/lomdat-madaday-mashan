@@ -116,17 +116,18 @@ function ReportDetailsScreen({
         </div>
       )}
 
-      {explanationOpen && (
-        <ExceptionExplanationModal
-          exceptionName={exceptionName}
-          explanation={exceptionData.explanation}
-          treatment={exceptionData.treatment}
-          progress={progress}
-          onExplanationViewed={onExplanationViewed}
-          onTreatmentViewed={onTreatmentViewed}
-          onClose={() => setExplanationOpen(false)}
-        />
-      )}
+{explanationOpen && (
+  <ExceptionExplanationModal
+    exceptionName={exceptionName}
+    explanation={exceptionData.explanation}
+    treatment={exceptionData.treatment}
+    flowchart={exceptionData.flowchart}
+    progress={progress}
+    onExplanationViewed={onExplanationViewed}
+    onTreatmentViewed={onTreatmentViewed}
+    onClose={() => setExplanationOpen(false)}
+  />
+)}
 
       {questionOpen && !progress?.questionAnswered && (
         <ExceptionQuestionModal

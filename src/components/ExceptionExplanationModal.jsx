@@ -3,32 +3,71 @@ import { useEffect, useState } from "react";
 import arrowOpen from "../assets/images/computer/arrow-open.svg";
 import arrowClosed from "../assets/images/computer/arrow-closed.svg";
 
+
+/*
+  Vite טוען אוטומטית את כל התרשימים
+  שנמצאים בתיקייה הזו.
+*/
+const flowchartModules = import.meta.glob(
+  "../assets/images/computer/flowcharts/attendance.svg",
+  {
+    eager: true,
+    import: "default",
+  }
+);
+
+
 function ExceptionExplanationModal({
   exceptionName,
   explanation,
   treatment,
+  flowchart,
   progress,
   onExplanationViewed,
   onTreatmentViewed,
   onClose,
 }) {
-  /*
-    ההסבר פתוח כברירת מחדל, כמו בעיצוב שלך.
-  */
-  const [openSection, setOpenSection] = useState("explanation");
+  const [openSection, setOpenSection] =
+    useState("explanation");
 
-  /*
-    מאחר שההסבר פתוח מיד כשהחלון נפתח,
-    הוא נחשב ככזה שהמשתמשת נחשפה אליו.
-  */
+  const [showFlowchart, setShowFlowchart] =
+    useState(false);
+
+
+  /* =========================
+     מציאת התרשים המתאים
+  ========================= */
+
+  const flowchartPath = flowchart
+    ? `../assets/images/computer/flowcharts/${flowchart}.svg`
+    : null;
+
+  const flowchartImage =
+    flowchartPath
+      ? flowchartModules[flowchartPath]
+      : null;
+
+
+  /* =========================
+     סימון ההסבר ככזה שנצפה
+  ========================= */
+
   useEffect(() => {
     onExplanationViewed?.();
-    // ההסבר פתוח כברירת מחדל, ולכן מסמנים אותו פעם אחת בפתיחת החלון.
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+
+  /* =========================
+     הסבר החריג
+  ========================= */
+
   const handleExplanationClick = () => {
-    const nextSection = openSection === "explanation" ? null : "explanation";
+    const nextSection =
+      openSection === "explanation"
+        ? null
+        : "explanation";
 
     setOpenSection(nextSection);
 
@@ -37,8 +76,16 @@ function ExceptionExplanationModal({
     }
   };
 
+
+  /* =========================
+     טיפול החריג
+  ========================= */
+
   const handleTreatmentClick = () => {
-    const nextSection = openSection === "treatment" ? null : "treatment";
+    const nextSection =
+      openSection === "treatment"
+        ? null
+        : "treatment";
 
     setOpenSection(nextSection);
 
@@ -47,135 +94,251 @@ function ExceptionExplanationModal({
     }
   };
 
+
   return (
-    <div className="exception-modal-overlay" dir="rtl">
-      <div className="exception-modal">
-        <div className="exception-modal-header">
-          <button
-            type="button"
-            className="exception-modal-close"
-            onClick={onClose}
-            aria-label="סגירת החלון"
-          >
-            ×
-          </button>
+    <div
+      className="exception-modal-overlay"
+      dir="rtl"
+    >
 
-          <h2 className="exception-modal-name">{exceptionName}</h2>
-        </div>
+      <div className="exception-modal-wrapper">
 
-        <div className="exception-accordion">
-          <button
-            type="button"
-            className={`exception-accordion-header ${
-              openSection === "explanation" ? "is-open" : ""
-            }`}
-            onClick={handleExplanationClick}
-          >
-            <span className="exception-accordion-title">
+        {/* =========================
+            החלון הראשי
+        ========================= */}
+
+        <div className="exception-modal">
+
+          <div className="exception-modal-header">
+
+            <button
+              type="button"
+              className="exception-modal-close"
+              onClick={onClose}
+              aria-label="סגירת החלון"
+            >
+              ×
+            </button>
+
+
+            <h2 className="exception-modal-name">
+              {exceptionName}
+            </h2>
+
+          </div>
+
+
+          {/* =========================
               הסבר החריג
-              {progress?.explanationViewed && (
-                <span
-                  className="exception-section-check"
-                  aria-label="הסבר החריג נפתח"
-                >
-                  ✓
-                </span>
-              )}
-            </span>
+          ========================= */}
 
-            <img
-              src={openSection === "explanation" ? arrowOpen : arrowClosed}
-              alt=""
-              className="exception-accordion-arrow"
-            />
-          </button>
+          <div className="exception-accordion">
 
-          {openSection === "explanation" && (
-            <div className="exception-accordion-content">
-              {Array.isArray(explanation)
-                ? explanation.map((item, index) => (
-                    <div key={index} className="exception-explanation-line">
-                      {item}
-                    </div>
-                  ))
-                : explanation || "כאן יופיע הסבר החריג."}
-            </div>
-          )}
-        </div>
+            <button
+              type="button"
+              className={`exception-accordion-header ${
+                openSection === "explanation"
+                  ? "is-open"
+                  : ""
+              }`}
+              onClick={handleExplanationClick}
+            >
 
-        <div className="exception-accordion">
-          <button
-            type="button"
-            className={`exception-accordion-header ${
-              openSection === "treatment" ? "is-open" : ""
-            }`}
-            onClick={handleTreatmentClick}
-          >
-            <span className="exception-accordion-title">
+              <span className="exception-accordion-title">
+
+                הסבר החריג
+
+                {progress?.explanationViewed && (
+                  <span
+                    className="exception-section-check"
+                    aria-label="הסבר החריג נפתח"
+                  >
+                    ✓
+                  </span>
+                )}
+
+              </span>
+
+
+              <img
+                src={
+                  openSection === "explanation"
+                    ? arrowOpen
+                    : arrowClosed
+                }
+                alt=""
+                className="exception-accordion-arrow"
+              />
+
+            </button>
+
+
+            {openSection === "explanation" && (
+              <div className="exception-accordion-content">
+
+                {Array.isArray(explanation) ? (
+                  explanation.map(
+                    (item, index) => (
+                      <div
+                        key={index}
+                        className="exception-explanation-line"
+                      >
+                        {item}
+                      </div>
+                    )
+                  )
+                ) : (
+                  explanation ||
+                  "כאן יופיע הסבר החריג."
+                )}
+
+              </div>
+            )}
+
+          </div>
+
+
+          {/* =========================
               טיפול החריג
-              {progress?.treatmentViewed && (
-                <span
-                  className="exception-section-check"
-                  aria-label="טיפול החריג נפתח"
-                >
-                  ✓
-                </span>
-              )}
-            </span>
+          ========================= */}
 
-            <img
-              src={openSection === "treatment" ? arrowOpen : arrowClosed}
-              alt=""
-              className="exception-accordion-arrow"
-            />
-          </button>
+          <div className="exception-accordion">
 
-          {openSection === "treatment" && (
-            <div className="exception-accordion-content">
-              {Array.isArray(treatment)
-                ? treatment.map((item, index) => (
-                    <div key={index} className="exception-treatment-line">
-                      {item}
-                    </div>
-                  ))
-                : treatment || "כאן יופיע אופן הטיפול בחריג."}
-            </div>
+            <button
+              type="button"
+              className={`exception-accordion-header ${
+                openSection === "treatment"
+                  ? "is-open"
+                  : ""
+              }`}
+              onClick={handleTreatmentClick}
+            >
+
+              <span className="exception-accordion-title">
+
+                טיפול החריג
+
+                {progress?.treatmentViewed && (
+                  <span
+                    className="exception-section-check"
+                    aria-label="טיפול החריג נפתח"
+                  >
+                    ✓
+                  </span>
+                )}
+
+              </span>
+
+
+              <img
+                src={
+                  openSection === "treatment"
+                    ? arrowOpen
+                    : arrowClosed
+                }
+                alt=""
+                className="exception-accordion-arrow"
+              />
+
+            </button>
+
+
+            {openSection === "treatment" && (
+              <div className="exception-accordion-content">
+
+                {Array.isArray(treatment) ? (
+                  treatment.map(
+                    (item, index) => (
+                      <div
+                        key={index}
+                        className="exception-treatment-line"
+                      >
+                        {item}
+                      </div>
+                    )
+                  )
+                ) : (
+                  treatment ||
+                  "כאן יופיע אופן הטיפול בחריג."
+                )}
+
+              </div>
+            )}
+
+          </div>
+
+
+          {/* =========================
+              תרשים זרימה
+          ========================= */}
+
+          {flowchartImage && (
+            <button
+              type="button"
+              className={`show-flowchart-button ${
+                showFlowchart
+                  ? "is-open"
+                  : ""
+              }`}
+              onClick={() =>
+                setShowFlowchart(
+                  (prev) => !prev
+                )
+              }
+            >
+              תרשים זרימה
+            </button>
           )}
 
-{flowchart && (
-  <button
-    type="button"
-    className="show-flowchart-button"
-    onClick={() => setShowFlowchart(true)}
-  >
-    להצגת תרשים הזרימה
-  </button>
-)}
-{showFlowchart && (
-  <div className="flowchart-overlay">
-    <div className="flowchart-modal">
-
-      <button
-        type="button"
-        className="flowchart-close"
-        onClick={() => setShowFlowchart(false)}
-      >
-        ×
-      </button>
-
-      <img
-        src={flowchart}
-        alt="תרשים זרימה"
-        className="flowchart-image"
-      />
-
-    </div>
-  </div>
-)}
         </div>
+
+
+        {/* =========================
+            פופאפ התרשים
+        ========================= */}
+
+        {showFlowchart && flowchartImage && (
+          <div className="flowchart-popover">
+
+            <div className="flowchart-popover-header">
+
+              <span>
+                תרשים זרימה
+              </span>
+
+
+              <button
+                type="button"
+                className="flowchart-close"
+                onClick={() =>
+                  setShowFlowchart(false)
+                }
+                aria-label="סגירת תרשים הזרימה"
+              >
+                ×
+              </button>
+
+            </div>
+
+
+            <div className="flowchart-popover-content">
+
+              <img
+                src={flowchartImage}
+                alt={`תרשים זרימה - ${exceptionName}`}
+                className="flowchart-image"
+              />
+
+            </div>
+
+          </div>
+        )}
+
       </div>
+
     </div>
   );
 }
+
 
 export default ExceptionExplanationModal;
