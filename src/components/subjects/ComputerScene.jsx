@@ -46,6 +46,7 @@ const createDebugProgress = () => {
     [DEBUG_EXCEPTION]: {
       explanationViewed: true,
       treatmentViewed: true,
+      flowchartViewed: true,
       questionAnswered: false,
     },
   };
@@ -101,6 +102,7 @@ function ComputerScene({ onClose, onComplete }) {
     שומר התקדמות נפרדת לכל חריג:
     - הסבר
     - טיפול
+    - תרשים זרימה (אם קיים)
     - שאלה
 
     בדיבאג:
@@ -152,26 +154,33 @@ function ComputerScene({ onClose, onComplete }) {
   /*
     ההתקדמות של החריג שפתוח כרגע.
   */
-  const selectedExceptionProgress = useMemo(() => {
-    if (!selectedException) {
-      return {
-        explanationViewed: false,
-        treatmentViewed: false,
-        questionAnswered: false,
-      };
-    }
-
-    return (
-      exceptionProgress[selectedException] ?? {
-        explanationViewed: false,
-        treatmentViewed: false,
-        questionAnswered: false,
+    const selectedExceptionProgress = useMemo(() => {
+      if (!selectedException) {
+        return {
+          explanationViewed: false,
+          treatmentViewed: false,
+          flowchartViewed: false,
+          questionAnswered: false,
+        };
       }
-    );
-  }, [
-    selectedException,
-    exceptionProgress,
-  ]);
+    
+      return (
+        exceptionProgress[selectedException] ?? {
+          explanationViewed: false,
+          treatmentViewed: false,
+          flowchartViewed: false,
+          questionAnswered: false,
+        }
+      );
+    }, [
+      selectedException,
+      exceptionProgress,
+    ]);
+    const selectedExceptionHasFlowchart =
+  Boolean(
+    selectedException &&
+    detailsData[selectedException]?.flowchart
+  );
 
   /*
     אפשר ללחוץ על "חזרה לרשימת החריגים"
@@ -184,9 +193,13 @@ function ComputerScene({ onClose, onComplete }) {
     אם כבר הגישו תשובה בעבר,
     היא תחזיר ישר לטבלת החריגים.
   */
-  const selectedExceptionContentComplete =
+    const selectedExceptionContentComplete =
     selectedExceptionProgress.explanationViewed &&
-    selectedExceptionProgress.treatmentViewed;
+    selectedExceptionProgress.treatmentViewed &&
+    (
+      !selectedExceptionHasFlowchart ||
+      selectedExceptionProgress.flowchartViewed
+    );
 
   const characterTexts = {
     1: {
@@ -261,6 +274,18 @@ function ComputerScene({ onClose, onComplete }) {
     }
 
     if (
+      selectedExceptionHasFlowchart &&
+      !selectedExceptionProgress.flowchartViewed
+    ) {
+      return {
+        regular:
+          "מעולה, עברתם על ההסבר ועל אופן הטיפול.",
+        bold:
+          "כעת פתחו גם את תרשים הזרימה",
+      };
+    }
+
+    if (
       !selectedExceptionProgress.questionAnswered
     ) {
       return {
@@ -277,7 +302,10 @@ function ComputerScene({ onClose, onComplete }) {
       bold:
         "אפשר לחזור לרשימת החריגים",
     };
-  }, [selectedExceptionProgress]);
+  }, [
+    selectedExceptionProgress,
+    selectedExceptionHasFlowchart,
+  ]);
 
   const currentCharacterText =
     page === 2
@@ -316,15 +344,19 @@ function ComputerScene({ onClose, onComplete }) {
         explanationViewed:
           prev[selectedException]
             ?.explanationViewed ?? false,
-
+      
         treatmentViewed:
           prev[selectedException]
             ?.treatmentViewed ?? false,
-
+      
+        flowchartViewed:
+          prev[selectedException]
+            ?.flowchartViewed ?? false,
+      
         questionAnswered:
           prev[selectedException]
             ?.questionAnswered ?? false,
-
+      
         ...updates,
       },
     }));
@@ -339,6 +371,11 @@ function ComputerScene({ onClose, onComplete }) {
   const handleTreatmentViewed = () => {
     updateSelectedExceptionProgress({
       treatmentViewed: true,
+    });
+  };
+  const handleFlowchartViewed = () => {
+    updateSelectedExceptionProgress({
+      flowchartViewed: true,
     });
   };
 
@@ -367,21 +404,25 @@ function ComputerScene({ onClose, onComplete }) {
       לכן אם יחזרו לחריג הזה,
       לא יצטרכו לענות עליה שוב.
     */
-    setExceptionProgress((prev) => ({
-      ...prev,
-
-      [exceptionName]: {
-        explanationViewed:
-          prev[exceptionName]
-            ?.explanationViewed ?? true,
-
-        treatmentViewed:
-          prev[exceptionName]
-            ?.treatmentViewed ?? true,
-
-        questionAnswered: true,
-      },
-    }));
+      setExceptionProgress((prev) => ({
+        ...prev,
+      
+        [exceptionName]: {
+          explanationViewed:
+            prev[exceptionName]
+              ?.explanationViewed ?? true,
+      
+          treatmentViewed:
+            prev[exceptionName]
+              ?.treatmentViewed ?? true,
+      
+          flowchartViewed:
+            prev[exceptionName]
+              ?.flowchartViewed ?? false,
+      
+          questionAnswered: true,
+        },
+      }));
 
     /*
       רק עכשיו החריג מקבל ✓.
@@ -627,6 +668,10 @@ function ComputerScene({ onClose, onComplete }) {
 
                   onTreatmentViewed={
                     handleTreatmentViewed
+                  }
+
+                  onFlowchartViewed={
+                    handleFlowchartViewed
                   }
 
                   onQuestionSubmit={

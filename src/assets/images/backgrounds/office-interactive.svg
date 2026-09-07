@@ -218,26 +218,28 @@
     class="instruction-card"
   >
 
-    <!-- הטקסט הראשון - פנקס -->
-    <div id="notebook-instruction" class="instruction-content">
-      <p class="instruction-text">
-        שלום!
-        <br/><br/>
+  <!-- הטקסט הראשון - פנקס -->
+<div id="notebook-instruction" class="instruction-content">
+  <p class="instruction-text">
+    <span class="instruction-hello">שלום!</span>
 
-        אני אעבור איתכם היום את
-        <br/>
-        הלומדה של מדדי משא״ן!
-        <br/><br/>
+    <br/>
 
-        אבל לפני שנעבוד על
-        <br/>
-        המערכת עצמה קצת מבוא
-      </p>
+    אני אעבור איתכם היום את
+    <br/>
+    הלומדה של מדדי משא״ן!
 
-      <p class="instruction-bold">
-        לחצו על הפנקס!!
-      </p>
-    </div>
+    <br/>
+
+    אבל לפני שנעבוד על
+    <br/>
+    המערכת עצמה קצת מבוא
+  </p>
+
+  <p class="instruction-bold">
+    לחצו על הפנקס!!
+  </p>
+</div>
 
 
     <!-- הטקסט השני - עטים -->

@@ -115,6 +115,15 @@
   width: 100%;
 }
 
+.instruction-hello {
+  display: inline-block;
+
+  font-family: "rubik-bold";
+  font-size: 1.7rem;
+  font-weight: 700;
+
+  margin-bottom: 0.25rem;
+}
 
 .instruction-text {
   margin: 0;
@@ -127,10 +136,9 @@
 
 
 .instruction-bold {
-  margin: 28px 0 0;
+  margin: 18px 0 0;
 
   font-size: 30px;
-
   font-family: "rubik-bold";
 }
 
