@@ -6,6 +6,8 @@ import {
 } from "react";
 
 import officeSvg from "../assets/images/backgrounds/office-interactive.svg?raw";
+import arrowRight from "../assets/images/arrow-right.png";
+
 import "../css/OfficeScene.css";
 
 import Notebook from "../components/subjects/Notebook";
@@ -39,20 +41,34 @@ function OfficeScene({
   const [pensOpen, setPensOpen] =
     useState(false);
 
-  // שומר אם כבר לחצו לפחות פעם אחת על המחשב
   const [computerWasClicked, setComputerWasClicked] =
     useState(false);
 
   const svgHostRef = useRef(null);
 
-
-  // ה-SVG הוא קובץ מקומי של הפרויקט
   const svgMarkup = useMemo(
     () => ({
       __html: officeSvg,
     }),
     []
   );
+
+  const officeContentOpen =
+    isNotebookOpen ||
+    computerOpen ||
+    pensOpen;
+
+  const showNotebookArrow =
+    step === STEPS.NOTEBOOK &&
+    !officeContentOpen;
+
+  const showComputerArrow =
+    step === STEPS.COMPUTER &&
+    !officeContentOpen;
+
+  const showPensArrow =
+    step === STEPS.PENS &&
+    !officeContentOpen;
 
 
   useEffect(() => {
@@ -61,11 +77,6 @@ function OfficeScene({
     if (!host) {
       return;
     }
-
-
-    /* =========================
-       אלמנטים מתוך ה-SVG
-    ========================= */
 
     const notebook =
       host.querySelector(
@@ -122,10 +133,6 @@ function OfficeScene({
     }
 
 
-    /* =========================
-       נראות לפי השלב
-    ========================= */
-
     notebook.classList.toggle(
       "is-hidden",
       false
@@ -141,10 +148,6 @@ function OfficeScene({
       step < STEPS.PENS
     );
 
-
-    /* =========================
-       בועת ההוראות
-    ========================= */
 
     const showInstructionBox =
       step === STEPS.NOTEBOOK ||
@@ -175,50 +178,33 @@ function OfficeScene({
     }
 
 
-    /* =========================
-       מה לחיץ
-    ========================= */
-
-    // המחברת תמיד יכולה להיפתח שוב
     notebook.classList.add(
       "is-clickable"
     );
 
 
-    // המחשב פתוח משלב COMPUTER והלאה
     computerClickTarget.classList.toggle(
       "is-clickable",
       step >= STEPS.COMPUTER
     );
 
 
-    // העטים פתוחים משלב PENS והלאה
     pens.classList.toggle(
       "is-clickable",
       step >= STEPS.PENS
     );
 
 
-    /* =========================
-       אנימציות / זוהר
-    ========================= */
-
-    // המחברת מהבהבת רק כשצריך ללחוץ עליה
     notebook.classList.toggle(
       "is-blinking",
       step === STEPS.NOTEBOOK
     );
 
+    notebook.classList.toggle(
+      "is-completed-glow",
+      step > STEPS.NOTEBOOK
+    );
 
-    /*
-      גלגל השיניים:
-
-      לפני שלחצו על המחשב:
-      זוהר בפעימות.
-
-      אחרי שלחצו:
-      נשאר זוהר קבוע.
-    */
 
     outerGearGlow?.classList.toggle(
       "is-active",
@@ -232,23 +218,20 @@ function OfficeScene({
     );
 
 
-    // העטים מהבהבים כשמגיעים אליהם
     pens.classList.toggle(
       "is-blinking",
       step === STEPS.PENS
     );
 
+    pens.classList.toggle(
+      "is-completed-glow",
+      step > STEPS.PENS
+    );
 
-    /* =========================
-       לחיצה על המחברת
-    ========================= */
 
     const handleNotebookClick = () => {
-      // תמיד ניתן לפתוח שוב
       setIsNotebookOpen(true);
 
-
-      // רק בפעם הראשונה מתקדמים למחשב
       if (step === STEPS.NOTEBOOK) {
         onNotebookClick?.();
 
@@ -259,10 +242,6 @@ function OfficeScene({
     };
 
 
-    /* =========================
-       לחיצה על המחשב
-    ========================= */
-
     const handleComputerClick = () => {
       if (
         step < STEPS.COMPUTER
@@ -270,10 +249,6 @@ function OfficeScene({
         return;
       }
 
-      /*
-        מהרגע שלחצו פעם אחת,
-        הזוהר המהבהב הופך לזוהר קבוע.
-      */
       setComputerWasClicked(true);
 
       onComputerClick?.();
@@ -282,10 +257,6 @@ function OfficeScene({
     };
 
 
-    /* =========================
-       לחיצה על העטים
-    ========================= */
-
     const handlePensClick = () => {
       if (
         step < STEPS.PENS
@@ -293,24 +264,11 @@ function OfficeScene({
         return;
       }
 
-      /*
-        כאן לא מסמנים DONE.
-
-        רק פותחים את PensScene.
-
-        רק אחרי שעברו על כל
-        חמשת העטים PensScene
-        יודיע לנו שהוא הסתיים.
-      */
       setPensOpen(true);
 
       onPensClick?.();
     };
 
-
-    /* =========================
-       Event listeners
-    ========================= */
 
     notebook.addEventListener(
       "click",
@@ -327,10 +285,6 @@ function OfficeScene({
       handlePensClick
     );
 
-
-    /* =========================
-       Cleanup
-    ========================= */
 
     return () => {
       notebook.removeEventListener(
@@ -360,22 +314,63 @@ function OfficeScene({
   return (
     <div className="office-scene">
 
-      {/* =========================
-          מסך המשרד
-      ========================= */}
+      <div className="office-scene__stage">
 
-      <div
-        ref={svgHostRef}
-        className="office-scene__svg"
-        dangerouslySetInnerHTML={
-          svgMarkup
-        }
-      />
+        <div
+          ref={svgHostRef}
+          className="office-scene__svg"
+          dangerouslySetInnerHTML={
+            svgMarkup
+          }
+        />
 
+        {showNotebookArrow && (
+          <div
+            className="
+              office-guide-arrow
+              office-guide-arrow--notebook
+            "
+            aria-hidden="true"
+          >
+            <img
+              src={arrowRight}
+              alt=""
+            />
+          </div>
+        )}
 
-      {/* =========================
-          מחברת
-      ========================= */}
+        {showComputerArrow && (
+          <div
+            className="
+              office-guide-arrow
+              office-guide-arrow--computer
+            "
+            aria-hidden="true"
+          >
+            <img
+              src={arrowRight}
+              alt=""
+            />
+          </div>
+        )}
+
+        {showPensArrow && (
+          <div
+            className="
+              office-guide-arrow
+              office-guide-arrow--pens
+            "
+            aria-hidden="true"
+          >
+            <img
+              src={arrowRight}
+              alt=""
+            />
+          </div>
+        )}
+
+      </div>
+
 
       {isNotebookOpen && (
         <Notebook
@@ -386,10 +381,6 @@ function OfficeScene({
       )}
 
 
-      {/* =========================
-          מחשב
-      ========================= */}
-
       {computerOpen && (
         <ComputerScene
           onClose={() => {
@@ -399,10 +390,6 @@ function OfficeScene({
           onComplete={() => {
             setComputerOpen(false);
 
-            /*
-              אחרי שמסיימים את המחשב
-              נפתח שלב העטים.
-            */
             if (
               step < STEPS.PENS
             ) {
@@ -415,45 +402,29 @@ function OfficeScene({
       )}
 
 
-      {/* =========================
-          עטים
-      ========================= */}
+      {pensOpen && (
+        <PensScene
+          onBack={() => {
+            setPensOpen(false);
 
-{pensOpen && (
-  <PensScene
+            if (
+              step === STEPS.DONE
+            ) {
+              onCourseComplete?.();
+            }
+          }}
 
-    onBack={() => {
-      setPensOpen(false);
-
-      /*
-        רק אם כבר עברו על כל העטים,
-        לחיצה על "חזור" מסיימת את הלומדה.
-      */
-      if (step === STEPS.DONE) {
-        onCourseComplete?.();
-      }
-    }}
-
-    onComplete={() => {
-      /*
-        עברו על כל חמשת העטים.
-
-        אנחנו עדיין לא יוצאים מהמסך,
-        רק מסמנים שהכול הסתיים.
-
-        המשתמשת עדיין צריכה ללחוץ "חזור".
-      */
-      if (
-        step < STEPS.DONE
-      ) {
-        setStep(
-          STEPS.DONE
-        );
-      }
-    }}
-
-  />
-)}
+          onComplete={() => {
+            if (
+              step < STEPS.DONE
+            ) {
+              setStep(
+                STEPS.DONE
+              );
+            }
+          }}
+        />
+      )}
 
     </div>
   );

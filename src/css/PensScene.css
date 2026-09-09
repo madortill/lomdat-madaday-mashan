@@ -179,7 +179,7 @@
   left: 0;
   bottom: 0;
 
-  width: 26%;
+  width: 39%;
   height: auto;
 
   z-index: 20;
@@ -223,12 +223,12 @@
   font-family: "rubik-bold";
   font-size: 1.8rem;
   font-weight: 700;
-
+  transition: transform 0.2s ease;
   cursor: pointer;
 }
 
 .pens-scene-back-button:hover {
-  background: #063f57;
+  transform: scale(1.08);
 }
 
 .pens-scene-back-button:active {

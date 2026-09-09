@@ -360,22 +360,28 @@
   text-align: center;
 
   cursor: pointer;
-
+  transition: transform 0.2s ease;
   animation: explanationGlow 1.2s ease-in-out infinite;
+}
+
+.exception-explanation-button:hover {
+  transform: scale(1.08);
 }
 
 @keyframes explanationGlow {
   0%,
   100% {
     box-shadow:
-      0 0 5px rgba(80, 194, 255, 0.45),
-      0 0 10px rgba(80, 194, 255, 0.35);
+      0 0 10px rgba(80, 194, 255, 0.658),
+      0 0 15px rgba(80, 194, 255, 0.623);
+      /* transform: scale(1.08); */
   }
 
   50% {
     box-shadow:
-      0 0 8px rgba(80, 194, 255, 0.9),
-      0 0 18px rgba(80, 194, 255, 0.8);
+      0 0 18px rgb(80, 194, 255),
+      0 0 28px rgb(80, 194, 255);
+      transform: scale(1.1);
   }
 }
 
@@ -1034,4 +1040,192 @@
 
   font-size: 0.85rem;
   font-weight: 900;
+}
+/* =========================================================
+   REPORT DETAILS TUTORIAL
+========================================================= */
+
+
+/* ==========================================
+   שכבת ההחשכה
+
+   ה-overlay עצמו לא חוסם לחיצות.
+   רק ארבעת החלקים השחורים חוסמים אותן.
+
+   לכן האזור ה"פתוח" באמת נשאר לחיץ.
+========================================== */
+
+.report-tutorial-overlay {
+  position: absolute;
+  inset: 0;
+
+  z-index: 80;
+
+  pointer-events: none;
+}
+
+
+/* ארבעת החלקים השחורים */
+
+.report-tutorial-mask {
+  position: absolute;
+
+  background:
+    rgba(0, 0, 0, 0.64);
+
+  pointer-events: all;
+}
+
+
+/* ==========================================
+   מסגרת מסביב לדבר הפעיל
+========================================== */
+
+.report-tutorial-highlight {
+  position: absolute;
+
+  z-index: 82;
+
+  border:
+    0.18rem solid
+    #67d0ff;
+
+  border-radius: 0.4rem;
+
+  box-sizing: border-box;
+
+  pointer-events: none;
+
+  box-shadow:
+    0 0 0.4rem
+    rgba(80, 194, 255, 0.8),
+    0 0 1rem
+    rgba(80, 194, 255, 0.75);
+
+  animation:
+    reportTutorialGlow
+    1.15s
+    ease-in-out
+    infinite;
+}
+
+
+@keyframes reportTutorialGlow {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0.3rem
+      rgba(80, 194, 255, 0.45),
+      0 0 0.7rem
+      rgba(80, 194, 255, 0.5);
+  }
+
+  50% {
+    box-shadow:
+      0 0 0.55rem
+      rgba(80, 194, 255, 0.9),
+      0 0 1.2rem
+      rgba(80, 194, 255, 0.9);
+  }
+}
+
+
+/* ==========================================
+   בועת ההסבר
+========================================== */
+
+.report-tutorial-bubble {
+  position: absolute;
+
+  z-index: 90;
+
+  width: min(
+    24rem,
+    45%
+  );
+
+  padding:
+    0.9rem
+    1.1rem;
+
+  box-sizing: border-box;
+
+  background:
+    #ffffff;
+
+  color:
+    #07435d;
+
+  border-radius:
+    0.45rem;
+
+  box-shadow:
+    0 0.4rem 1.4rem
+    rgba(0, 0, 0, 0.28);
+
+  direction: rtl;
+  text-align: center;
+
+  font-family: "Rubik";
+
+  pointer-events: none;
+}
+
+
+.report-tutorial-title {
+  display: block;
+
+  margin-bottom:
+    0.35rem;
+
+  font-family:
+    "rubik-bold",
+    "Rubik";
+
+  font-size:
+    1rem;
+
+  font-weight:
+    700;
+}
+
+
+.report-tutorial-text {
+  font-size:
+    0.8rem;
+
+  line-height:
+    1.45;
+
+  font-weight:
+    500;
+}
+
+
+.report-tutorial-click-hint {
+  margin-top:
+    0.55rem;
+
+  color:
+    #388ac3;
+
+  font-size:
+    0.72rem;
+
+  font-weight:
+    700;
+}
+
+
+/* ==========================================
+   נגישות
+========================================== */
+
+@media (
+  prefers-reduced-motion:
+  reduce
+) {
+  .report-tutorial-highlight {
+    animation: none;
+  }
 }

@@ -245,11 +245,13 @@
     <!-- הטקסט השני - עטים -->
     <div id="pens-instruction" class="instruction-content">
       <p class="instruction-text">
-        כאן יהיה הטקסט השני שלך
+        כל הכבוד! עברתם על כל החריגים!
+        <br/>
+        ועכשיו קצת טיפים לסיום
       </p>
 
       <p class="instruction-bold">
-        לחצו על העטים!!
+        לחצו על קופסת העטים!!
       </p>
     </div>
 
