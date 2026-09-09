@@ -49,7 +49,8 @@
     font-family: "rubik-bold";
     color: #07435D;
     font-size: 2rem;
-    padding: 0.5rem;
+    margin-top: 1rem;
+    padding: 1rem;
     
   }
   .sec-title-computer {
@@ -57,7 +58,7 @@
     font-weight: 700;
     color: #07435D;
     font-size: 1.3rem;
-    padding: 2rem;
+    padding: 0.5rem 2rem;
     text-align: start;
   }
   .text-computer {
