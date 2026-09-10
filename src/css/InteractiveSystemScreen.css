@@ -292,9 +292,6 @@
 .system-focus-highlight {
   position: absolute;
   z-index: 72;
-  box-sizing: border-box;
-  border: 0.12rem solid rgba(114, 214, 255, 0.9);
-  border-radius: 0.45rem;
   pointer-events: none;
   box-shadow:
     0 0 0.4rem rgba(74, 192, 255, 0.55),

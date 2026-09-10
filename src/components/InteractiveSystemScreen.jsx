@@ -12,6 +12,44 @@ import ExceptionsTable from "./ExceptionsTable";
 
 const SYSTEM_TUTORIAL_KEY = "interactive-system-tutorial-seen";
 
+/* =========================================================
+   עריכה נוחה של אזורי ההדגשה
+
+   כל המספרים הם באחוזים מתוך מסך המערכת:
+   left   = מיקום משמאל
+   top    = מיקום מלמעלה
+   width  = רוחב
+   height = גובה
+
+   זה המקום היחיד שצריך לערוך.
+========================================================= */
+
+const FOCUS_BOXES = {
+  circles: {
+    left: 49,
+    top: 15,
+    width: 49,
+    height: 27,
+    radius: 0,
+  },
+
+  graph: {
+    left: 50,
+    top: 42,
+    width: 47,
+    height: 30,
+    radius: 0,
+  },
+
+  table: {
+    left: 2.1,
+    top: 20.5,
+    width: 46.5,
+    height: 78.5,
+    radius: 6,
+  },
+};
+
 const CIRCLE_DATA = {
   "circle-click-1": {
     glowId: "circle-glow-1",
@@ -109,10 +147,8 @@ function InteractiveSystemScreen({
   };
 
   /*
-    מחשב את ה"חלון" שנשאר מואר בכל שלב:
-    1. כל שלושת העיגולים יחד
-    2. הגרף
-    3. הטבלה
+    אזור ההדגשה נלקח ישירות מ-FOCUS_BOXES.
+    לכן אפשר לכוון אותו ידנית בקלות.
   */
   useEffect(() => {
     if (tutorialStep === null) {
@@ -120,130 +156,15 @@ function InteractiveSystemScreen({
       return;
     }
 
-    const screen = screenRef.current;
-    const host = svgHostRef.current;
+    const box = FOCUS_BOXES[tutorialStep];
 
-    if (!screen || !host) {
+    if (!box) {
+      setTutorialRect(null);
       return;
     }
 
-    const updateTutorialRect = () => {
-      const screenRect = screen.getBoundingClientRect();
-
-      let targetRect = null;
-
-      if (tutorialStep === "circles") {
-        const targets = CIRCLE_IDS
-          .map((id) => host.querySelector(`#${id}`))
-          .filter(Boolean);
-
-        if (targets.length === 0) {
-          setTutorialRect(null);
-          return;
-        }
-
-        const rects = targets.map((element) =>
-          element.getBoundingClientRect()
-        );
-
-        const left = Math.min(...rects.map((rect) => rect.left));
-        const top = Math.min(...rects.map((rect) => rect.top));
-        const right = Math.max(...rects.map((rect) => rect.right));
-        const bottom = Math.max(...rects.map((rect) => rect.bottom));
-
-        targetRect = {
-          left,
-          top,
-          width: right - left,
-          height: bottom - top,
-        };
-      }
-
-      if (tutorialStep === "graph") {
-        const graphTarget = host.querySelector(
-          "#graph-click-target"
-        );
-
-        if (!graphTarget) {
-          setTutorialRect(null);
-          return;
-        }
-
-        targetRect = graphTarget.getBoundingClientRect();
-      }
-
-      if (tutorialStep === "table") {
-        const tableTarget = screen.querySelector(
-          ".system-table-area"
-        );
-
-        if (!tableTarget) {
-          setTutorialRect(null);
-          return;
-        }
-
-        targetRect = tableTarget.getBoundingClientRect();
-      }
-
-      if (!targetRect) {
-        setTutorialRect(null);
-        return;
-      }
-
-      const padding =
-        tutorialStep === "table"
-          ? 6
-          : 10;
-
-      setTutorialRect({
-        left:
-          targetRect.left -
-          screenRect.left -
-          padding,
-        top:
-          targetRect.top -
-          screenRect.top -
-          padding,
-        width:
-          targetRect.width +
-          padding * 2,
-        height:
-          targetRect.height +
-          padding * 2,
-      });
-    };
-
-    updateTutorialRect();
-
-    const frame = requestAnimationFrame(
-      updateTutorialRect
-    );
-
-    const resizeObserver = new ResizeObserver(
-      updateTutorialRect
-    );
-
-    resizeObserver.observe(screen);
-    resizeObserver.observe(host);
-
-    window.addEventListener(
-      "resize",
-      updateTutorialRect
-    );
-
-    return () => {
-      cancelAnimationFrame(frame);
-      resizeObserver.disconnect();
-
-      window.removeEventListener(
-        "resize",
-        updateTutorialRect
-      );
-    };
-  }, [
-    tutorialStep,
-    tableOpen,
-  ]);
+    setTutorialRect(box);
+  }, [tutorialStep]);
 
   /*
     עיגולים
@@ -683,53 +604,47 @@ function InteractiveSystemScreen({
               className="system-focus-overlay"
               aria-hidden="true"
             >
+              {/* למעלה */}
               <div
                 className="system-focus-mask"
                 style={{
                   left: 0,
                   top: 0,
                   width: "100%",
-                  height:
-                    tutorialRect.top,
+                  height: `${tutorialRect.top}%`,
                 }}
               />
 
+              {/* למטה */}
               <div
                 className="system-focus-mask"
                 style={{
                   left: 0,
-                  top:
-                    tutorialRect.top +
-                    tutorialRect.height,
+                  top: `${tutorialRect.top + tutorialRect.height}%`,
                   right: 0,
                   bottom: 0,
                 }}
               />
 
+              {/* שמאל */}
               <div
                 className="system-focus-mask"
                 style={{
                   left: 0,
-                  top:
-                    tutorialRect.top,
-                  width:
-                    tutorialRect.left,
-                  height:
-                    tutorialRect.height,
+                  top: `${tutorialRect.top}%`,
+                  width: `${tutorialRect.left}%`,
+                  height: `${tutorialRect.height}%`,
                 }}
               />
 
+              {/* ימין */}
               <div
                 className="system-focus-mask"
                 style={{
-                  left:
-                    tutorialRect.left +
-                    tutorialRect.width,
+                  left: `${tutorialRect.left + tutorialRect.width}%`,
                   right: 0,
-                  top:
-                    tutorialRect.top,
-                  height:
-                    tutorialRect.height,
+                  top: `${tutorialRect.top}%`,
+                  height: `${tutorialRect.height}%`,
                 }}
               />
             </div>
@@ -737,14 +652,11 @@ function InteractiveSystemScreen({
             <div
               className={`system-focus-highlight system-focus-highlight--${tutorialStep}`}
               style={{
-                left:
-                  tutorialRect.left,
-                top:
-                  tutorialRect.top,
-                width:
-                  tutorialRect.width,
-                height:
-                  tutorialRect.height,
+                left: `${tutorialRect.left}%`,
+                top: `${tutorialRect.top}%`,
+                width: `${tutorialRect.width}%`,
+                height: `${tutorialRect.height}%`,
+                borderRadius: `${tutorialRect.radius ?? 8}px`,
               }}
               aria-hidden="true"
             />
