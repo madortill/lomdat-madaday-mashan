@@ -24,6 +24,7 @@ const exceptionRows = [
 function ExceptionsTable({
   onReportClick,
   completedExceptions = [],
+  highlightReportButtons = false,
 }) {
   const handleReportClick = (row, index) => {
     if (onReportClick) {
@@ -40,9 +41,7 @@ function ExceptionsTable({
         <table className="exceptions-table">
           <thead>
             <tr>
-              <th className="exception-name-column">
-                שם חריג
-              </th>
+              <th className="exception-name-column">שם חריג</th>
 
               <th>חריגים בזמן טיפול</th>
 
@@ -52,9 +51,7 @@ function ExceptionsTable({
 
               <th>אחוז משקל</th>
 
-              <th className="report-column">
-                דו״ח פרטני
-              </th>
+              <th className="report-column">דו״ח פרטני</th>
             </tr>
           </thead>
 
@@ -78,51 +75,54 @@ function ExceptionsTable({
             </tr>
 
             {exceptionRows.map((row, index) => {
-  const isCompleted =
-    completedExceptions.includes(row);
+              const isCompleted = completedExceptions.includes(row);
 
-  return (
-    <tr
-      className={`exception-data-row ${
-        isCompleted ? "is-completed" : ""
-      }`}
-      key={`${row}-${index}`}
-    >
-      <td className="exception-name-cell">
-        {row}
-      </td>
+              return (
+                <tr
+                  className={`exception-data-row ${
+                    isCompleted ? "is-completed" : ""
+                  }`}
+                  key={`${row}-${index}`}
+                >
+                  <td className="exception-name-cell">{row}</td>
 
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
 
-      <td className="report-cell">
-        <div className="report-cell-content">
-          <button
-            type="button"
-            className="report-button"
-            onClick={() =>
-              handleReportClick(row, index)
-            }
-            aria-label={`פתיחת דוח פרטני עבור ${row}`}
-          >
-            <img src={reportIcon} alt="" />
-          </button>
+                  <td className="report-cell">
+                    <div className="report-cell-content">
+                      <button
+                        type="button"
+                        className="report-button"
+                        onClick={() => handleReportClick(row, index)}
+                        aria-label={`פתיחת דוח פרטני עבור ${row}`}
+                      >
+                        <img
+                          src={reportIcon}
+                          alt=""
+                          className={
+                            highlightReportButtons
+                              ? "report-icon--tutorial-highlight"
+                              : ""
+                          }
+                        />
+                      </button>
 
-          {isCompleted && (
-            <span
-              className="report-completed-check"
-              aria-label="הדוח בוצע"
-            >
-              ✓
-            </span>
-          )}
-        </div>
-      </td>
-    </tr>
-  );
-})}
+                      {isCompleted && (
+                        <span
+                          className="report-completed-check"
+                          aria-label="הדוח בוצע"
+                        >
+                          ✓
+                        </span>
+                      )}
+                    </div>
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>

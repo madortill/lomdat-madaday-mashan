@@ -449,7 +449,7 @@ function ReportDetailsScreen({
 
           top:
             tutorialRect.top -
-            12,
+           2,
 
           transform:
             "translate(-50%, -100%)",
@@ -467,8 +467,7 @@ function ReportDetailsScreen({
       ) {
         return {
           left:
-            tutorialRect.left +
-            tutorialRect.width / 2,
+           "20rem",
 
           top:
             tutorialRect.top +
@@ -487,8 +486,7 @@ function ReportDetailsScreen({
 
       return {
         left:
-          tutorialRect.left +
-          tutorialRect.width / 2,
+          "30rem",
 
         top:
           tutorialRect.top -

@@ -246,6 +246,46 @@
   height: 2rem;
 }
 
+/* =========================================
+   הדגשת כפתורי הדוח בכניסה הראשונית
+========================================= */
+
+.report-button--tutorial-highlight {
+  position: relative;
+
+  border: 0.15rem solid #67d0ff;
+
+  border-radius: 0.55rem;
+
+  box-shadow:
+    0 0 0.35rem rgba(103, 208, 255, 0.75),
+    0 0 0.8rem rgba(103, 208, 255, 0.75),
+    0 0 1.3rem rgba(103, 208, 255, 0.45);
+
+  animation:
+    reportButtonTutorialGlow
+    1.15s
+    ease-in-out
+    infinite;
+}
+
+
+@keyframes reportButtonTutorialGlow {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0.25rem rgba(103, 208, 255, 0.45),
+      0 0 0.55rem rgba(103, 208, 255, 0.45);
+  }
+
+  50% {
+    box-shadow:
+      0 0 0.45rem rgba(103, 208, 255, 1),
+      0 0 1rem rgba(103, 208, 255, 0.9),
+      0 0 1.5rem rgba(103, 208, 255, 0.55);
+  }
+}
+
 /* חלוקת רוחב העמודות */
 
 .system-table-area .exception-name-column {

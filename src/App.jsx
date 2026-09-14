@@ -1,4 +1,7 @@
-import React, { useState } from "react";
+import React, {
+  useEffect,
+  useState,
+} from "react";
 
 import "./css/App.css";
 
@@ -30,6 +33,21 @@ function App() {
     useState(0);
 
 
+    useEffect(() => {
+      /*
+        כל טעינה חדשה / Refresh
+        מאפסת את ההתקדמות הזמנית.
+      */
+    
+      sessionStorage.removeItem(
+        "pens-scene-progress"
+      );
+    
+      sessionStorage.removeItem(
+        "interactive-system-tutorial-seen"
+      );
+    }, []);
+
   /* =========================
      סיום הלומדה
   ========================= */
@@ -59,20 +77,30 @@ function App() {
   /* =========================
      מההתחלה
   ========================= */
-
   const handleRestart = () => {
     /*
-      קודם מסתירים את מסך הסיום
+      איפוס ההתקדמות של העטים
+    */
+    sessionStorage.removeItem(
+      "pens-scene-progress"
+    );
+  
+    /*
+      איפוס ההדרכה הראשונית
+      של מסך המערכת
+    */
+    sessionStorage.removeItem(
+      "interactive-system-tutorial-seen"
+    );
+  
+    /*
+      מסתירים את מסך הסיום
     */
     setShowEndScene(false);
-
-
+  
     /*
-      שינוי ה-key גורם ל-React
-      ליצור מחדש את כל הלומדה.
-
-      כל ה-useState חוזרים
-      לערכי ההתחלה שלהם.
+      מאפסים את כל ה-useState
+      בתוך הלומדה
     */
     setLearningKey(
       (prev) => prev + 1
