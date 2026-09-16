@@ -49,17 +49,17 @@ const CIRCLE_DATA = {
   "circle-click-1": {
     glowId: "circle-glow-1",
     title: "חריגים לציון",
-    text: "כאן כתבי את ההסבר שיופיע בטול-טיפ של העיגול הראשון.",
+    text: "פה יהיה רשום מידע הקשור לחריגים לציון",
   },
   "circle-click-2": {
     glowId: "circle-glow-2",
     title: "חריגים בזמן טיפול",
-    text: "כאן כתבי את ההסבר שיופיע בטול-טיפ של העיגול השני.",
+    text: "פה יהיה רשום מידע הקשור לחריגים בזמן טיפול",
   },
   "circle-click-3": {
     glowId: "circle-glow-3",
     title: "סה״כ חריגים",
-    text: "כאן כתבי את ההסבר שיופיע בטול-טיפ של העיגול השלישי.",
+    text: "פה יהיה רשום מידע הקשור לכמות החריגים",
   },
 };
 
@@ -78,6 +78,32 @@ function InteractiveSystemScreen({
   const svgHostRef = useRef(null);
 
   const [tooltip, setTooltip] = useState(null);
+
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia(
+      "(hover: none), (pointer: coarse)"
+    );
+
+    const updateTouchMode = () => {
+      setIsTouchDevice(mediaQuery.matches);
+    };
+
+    updateTouchMode();
+
+    mediaQuery.addEventListener?.(
+      "change",
+      updateTouchMode
+    );
+
+    return () => {
+      mediaQuery.removeEventListener?.(
+        "change",
+        updateTouchMode
+      );
+    };
+  }, []);
 
   const [tutorialActive, setTutorialActive] = useState(() => {
     return sessionStorage.getItem(SYSTEM_TUTORIAL_KEY) !== "true";
@@ -159,6 +185,9 @@ function InteractiveSystemScreen({
 
   /*
     עיגולים
+
+    מחשב: hover.
+    טלפון/טאבלט: לחיצה והטול-טיפ נשאר פתוח.
   */
   useEffect(() => {
     const host = svgHostRef.current;
@@ -168,7 +197,6 @@ function InteractiveSystemScreen({
 
     Object.entries(CIRCLE_DATA).forEach(([clickId, content]) => {
       const clickTarget = host.querySelector(`#${clickId}`);
-
       const glow = host.querySelector(`#${content.glowId}`);
 
       if (!clickTarget) {
@@ -177,11 +205,8 @@ function InteractiveSystemScreen({
       }
 
       clickTarget.classList.add("svg-circle-click");
-
       clickTarget.setAttribute("role", "button");
-
       clickTarget.setAttribute("tabindex", "0");
-
       clickTarget.setAttribute("aria-label", `${content.title} - הצגת מידע`);
 
       if (glow) {
@@ -189,14 +214,11 @@ function InteractiveSystemScreen({
       }
 
       const stopGlowBlink = () => {
-        if (!glow) return;
-
-        glow.classList.add("is-visited");
+        glow?.classList.add("is-visited");
       };
 
-      const showTooltip = (event) => {
+      const openTooltipAtPointer = (event) => {
         const { x, y } = getPointerPosition(event);
-
         setTooltip({
           id: clickId,
           title: content.title,
@@ -206,57 +228,8 @@ function InteractiveSystemScreen({
         });
       };
 
-      const moveTooltip = (event) => {
-        const { x, y } = getPointerPosition(event);
-
-        setTooltip((prev) => {
-          if (!prev || prev.id !== clickId) {
-            return prev;
-          }
-
-          return {
-            ...prev,
-            x,
-            y,
-          };
-        });
-      };
-
-      const hideTooltip = () => {
-        /*
-            רק כשהמשתמשת מסיימת לקרוא
-            ויוצאת מהעיגול -
-            אנחנו מסמנות אותו כ"ביקרו בו".
-          */
-        markCircleAsVisited(clickId);
-        stopGlowBlink();
-
-        setTooltip((prev) => {
-          if (prev?.id === clickId) {
-            return null;
-          }
-
-          return prev;
-        });
-      };
-
-      const handleClick = (event) => {
-        showTooltip(event);
-      };
-
-      const handleKeyDown = (event) => {
-        if (event.key !== "Enter" && event.key !== " ") {
-          return;
-        }
-
-        event.preventDefault();
-
-        markCircleAsVisited(clickId);
-
-        stopGlowBlink();
-
+      const openTooltipAtCenter = () => {
         const clickRect = clickTarget.getBoundingClientRect();
-
         const hostRect = host.getBoundingClientRect();
 
         setTooltip({
@@ -264,29 +237,64 @@ function InteractiveSystemScreen({
           title: content.title,
           text: content.text,
           x: clickRect.left - hostRect.left + clickRect.width / 2,
-          y: clickRect.top - hostRect.top,
+          y: clickRect.top - hostRect.top + clickRect.height / 2,
         });
       };
 
-      clickTarget.addEventListener("pointerenter", showTooltip);
+      const handlePointerEnter = (event) => {
+        if (isTouchDevice) return;
+        openTooltipAtPointer(event);
+      };
 
-      clickTarget.addEventListener("pointermove", moveTooltip);
+      const handlePointerMove = (event) => {
+        if (isTouchDevice) return;
+        const { x, y } = getPointerPosition(event);
 
-      clickTarget.addEventListener("pointerleave", hideTooltip);
+        setTooltip((prev) => {
+          if (!prev || prev.id !== clickId) return prev;
+          return { ...prev, x, y };
+        });
+      };
 
+      const handlePointerLeave = () => {
+        if (isTouchDevice) return;
+
+        markCircleAsVisited(clickId);
+        stopGlowBlink();
+
+        setTooltip((prev) =>
+          prev?.id === clickId ? null : prev
+        );
+      };
+
+      const handleClick = () => {
+        if (!isTouchDevice) return;
+
+        markCircleAsVisited(clickId);
+        stopGlowBlink();
+        openTooltipAtCenter();
+      };
+
+      const handleKeyDown = (event) => {
+        if (event.key !== "Enter" && event.key !== " ") return;
+
+        event.preventDefault();
+        markCircleAsVisited(clickId);
+        stopGlowBlink();
+        openTooltipAtCenter();
+      };
+
+      clickTarget.addEventListener("pointerenter", handlePointerEnter);
+      clickTarget.addEventListener("pointermove", handlePointerMove);
+      clickTarget.addEventListener("pointerleave", handlePointerLeave);
       clickTarget.addEventListener("click", handleClick);
-
       clickTarget.addEventListener("keydown", handleKeyDown);
 
       cleanups.push(() => {
-        clickTarget.removeEventListener("pointerenter", showTooltip);
-
-        clickTarget.removeEventListener("pointermove", moveTooltip);
-
-        clickTarget.removeEventListener("pointerleave", hideTooltip);
-
+        clickTarget.removeEventListener("pointerenter", handlePointerEnter);
+        clickTarget.removeEventListener("pointermove", handlePointerMove);
+        clickTarget.removeEventListener("pointerleave", handlePointerLeave);
         clickTarget.removeEventListener("click", handleClick);
-
         clickTarget.removeEventListener("keydown", handleKeyDown);
       });
     });
@@ -294,7 +302,7 @@ function InteractiveSystemScreen({
     return () => {
       cleanups.forEach((cleanup) => cleanup());
     };
-  }, [setVisitedCircles]);
+  }, [isTouchDevice, setVisitedCircles]);
 
   /*
     מחזיר את מצב ה-is-visited

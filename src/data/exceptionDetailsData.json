@@ -9,8 +9,8 @@
       {
         "id": 1,
         "personalNumber": "7654321",
-        "firstName": "נועה",
-        "lastName": "לוי",
+        "firstName": "ישראל",
+        "lastName": "ישראלי",
         "exceptionStart": "01/08/2026",
         "exceptionEnd": "",
         "eventNumber": "1001",
@@ -34,8 +34,23 @@
         {
           "id": 1,
           "personalNumber": "7654321",
-          "firstName": "נועה",
-          "lastName": "לוי",
+          "firstName": "ישראל",
+          "lastName": "ישראלי",
+          "exceptionStart": "01/08/2026",
+          "exceptionEnd": "",
+          "eventNumber": "1001",
+          "unit": "יחידה 123",
+          "daysInException": "17",
+          "gender": "נקבה",
+          "corps": "חיל משאבי האנוש",
+          "branch": "זרוע היבשה",
+          "rank": "סמל"
+        },
+        {
+          "id": 1,
+          "personalNumber": "7654321",
+          "firstName": "ישראל",
+          "lastName": "ישראלי",
           "exceptionStart": "01/08/2026",
           "exceptionEnd": "",
           "eventNumber": "1001",
@@ -57,7 +72,38 @@
     "- נכנסים ליחידה של החייל שחסר לו דיווח, משנים את התאריך לתאריך שחסר דיווח ומשנים לו לפי הצורך והסטטוס"
   ],
 
-    "rows": []
+    "rows": [
+      {
+        "id": 1,
+        "personalNumber": "1234567",
+        "firstName": "ישראל",
+        "lastName": "ישראלי",
+        "exceptionStart": "03/08/2026",
+        "exceptionEnd": "",
+        "eventNumber": "1001",
+        "unit": "יחידה 214",
+        "daysInException": "12",
+        "gender": "זכר",
+        "corps": "חיל משאבי האנוש",
+        "branch": "זרוע היבשה",
+        "rank": "סמל"
+      },
+      {
+        "id": 1,
+        "personalNumber": "1234567",
+        "firstName": "ישראל",
+        "lastName": "ישראלי",
+        "exceptionStart": "03/08/2026",
+        "exceptionEnd": "",
+        "eventNumber": "1001",
+        "unit": "יחידה 214",
+        "daysInException": "12",
+        "gender": "זכר",
+        "corps": "חיל משאבי האנוש",
+        "branch": "זרוע היבשה",
+        "rank": "סמל"
+      }
+    ]
   },
   "פערים בהזנת מעקב נוכחות": {
     "explanation": [
@@ -71,7 +117,53 @@
       "- נכנסים למערכת אנשים -> לוחצים על הפלוס -> מעקב נוכחות מילואים.",
       "- נכנסים ליחידה של החייל שחסר לו דיווח, משנים את התאריך לתאריך שחסר דיווח ומשנים לו לפי הצורך והסטטוס נוכחות."
     ],
-    "rows": []
+    "rows": [
+      {
+        "id": 2,
+        "personalNumber": "1234567",
+        "firstName": "ישראל",
+        "lastName": "ישראלי",
+        "exceptionStart": "18/07/2026",
+        "exceptionEnd": "",
+        "eventNumber": "1047",
+        "unit": "יחידה 380",
+        "daysInException": "29",
+        "gender": "זכר",
+        "corps": "חיל הלוגיסטיקה",
+        "branch": "זרוע היבשה",
+        "rank": "סמ״ר"
+      },
+      {
+        "id": 2,
+        "personalNumber": "1234567",
+        "firstName": "ישראל",
+        "lastName": "ישראלי",
+        "exceptionStart": "18/07/2026",
+        "exceptionEnd": "",
+        "eventNumber": "1047",
+        "unit": "יחידה 380",
+        "daysInException": "29",
+        "gender": "זכר",
+        "corps": "חיל הלוגיסטיקה",
+        "branch": "זרוע היבשה",
+        "rank": "סמ״ר"
+      },
+      {
+        "id": 2,
+        "personalNumber": "1234567",
+        "firstName": "ישראל",
+        "lastName": "ישראלי",
+        "exceptionStart": "18/07/2026",
+        "exceptionEnd": "",
+        "eventNumber": "1047",
+        "unit": "יחידה 380",
+        "daysInException": "29",
+        "gender": "זכר",
+        "corps": "חיל הלוגיסטיקה",
+        "branch": "זרוע היבשה",
+        "rank": "סמ״ר"
+      }
+    ]
   },
   "חסר פרטי קרוב למקרה אסון": {
     "explanation": [
@@ -84,7 +176,23 @@
       "- נכנסים למערכת אנשים -> לוחצים על הפלוס -> עדכון פרטים אישיים -> שמים את המספר אישי של החייל -> קרובים.",
       "- אם אין לחייל בכלל קרוב למקרה אסון אז לוחצים על הוספת קרוב למקרה אסון ואם יש אז פשוט מעדכנים או מוסיפים לפי הפרטים שהחייל נתן ועושים שמור."
     ],
-    "rows": []
+    "rows": [
+      {
+        "id": 3,
+        "personalNumber": "1234567",
+        "firstName": "ישראל",
+        "lastName": "ישראלי",
+        "exceptionStart": "27/08/2026",
+        "exceptionEnd": "04/09/2026",
+        "eventNumber": "1123",
+        "unit": "יחידה 512",
+        "daysInException": "8",
+        "gender": "זכר",
+        "corps": "חיל התקשוב",
+        "branch": "אגף התקשוב וההגנה בסב״ר",
+        "rank": "רב״ט"
+      }
+    ]
   },
   "סיפוח ושמ״פ חופפים ליחידות שאינן תואמות": {
     "explanation": [
@@ -95,13 +203,90 @@
       "לוודא מול החייל היכן היה באותו התאריך. במידה והחייל היה ביחידת הסיפוח, יש לשנות את השמ\"פ בהתאם לסיפוח.",
       "במידה והחייל לא התייצב לסיפוח, יש למחוק את השב\"י."
     ],
-    "rows": []
+    "rows": [
+      {
+        "id": 4,
+        "personalNumber": "1234567",
+        "firstName": "ישראל",
+        "lastName": "ישראלי",
+        "exceptionStart": "11/06/2026",
+        "exceptionEnd": "",
+        "eventNumber": "1189",
+        "unit": "יחידה 126",
+        "daysInException": "46",
+        "gender": "זכר",
+        "corps": "חיל משאבי האנוש",
+        "branch": "אגף כוח האדם",
+        "rank": "רס״ל"
+      },
+      {
+        "id": 4,
+        "personalNumber": "1234567",
+        "firstName": "ישראל",
+        "lastName": "ישראלי",
+        "exceptionStart": "11/06/2026",
+        "exceptionEnd": "",
+        "eventNumber": "1189",
+        "unit": "יחידה 126",
+        "daysInException": "46",
+        "gender": "זכר",
+        "corps": "חיל משאבי האנוש",
+        "branch": "אגף כוח האדם",
+        "rank": "רס״ל"
+      }
+    ]
   },
   "משובצים בבלתי משובצים מעל 3 חודשים": {
     "explanation": "החריגות הזאת מופיעה ברגע שיש חיילים שמשובצים בסוג איוש 'בלתי משובץ' מעל שלושה חודשים בעץ מבנה.",
     "treatment": "יש לשאול את המפקד האישי של החייל איפה לשבץ אותו בעץ מבנה. לאחר מכן ללכת לעץ מבנה ולשנות לו את הסוג איוש מ'בלתי משובץ' למסגרת שאותה המפקד אמר לשבץ אותו.",
     "flowchart": "three",
-    "rows": []
+    "rows": [
+      {
+        "id": 5,
+        "personalNumber": "1234567",
+        "firstName": "ישראל",
+        "lastName": "ישראלי",
+        "exceptionStart": "02/09/2026",
+        "exceptionEnd": "",
+        "eventNumber": "1210",
+        "unit": "יחידה 733",
+        "daysInException": "5",
+        "gender": "זכר",
+        "corps": "חיל הטכנולוגיה והאחזקה",
+        "branch": "זרוע היבשה",
+        "rank": "סמל"
+      },
+      {
+        "id": 5,
+        "personalNumber": "1234567",
+        "firstName": "ישראל",
+        "lastName": "ישראלי",
+        "exceptionStart": "02/09/2026",
+        "exceptionEnd": "",
+        "eventNumber": "1210",
+        "unit": "יחידה 733",
+        "daysInException": "5",
+        "gender": "זכר",
+        "corps": "חיל הטכנולוגיה והאחזקה",
+        "branch": "זרוע היבשה",
+        "rank": "סמל"
+      },
+      {
+        "id": 5,
+        "personalNumber": "1234567",
+        "firstName": "ישראל",
+        "lastName": "ישראלי",
+        "exceptionStart": "02/09/2026",
+        "exceptionEnd": "",
+        "eventNumber": "1210",
+        "unit": "יחידה 733",
+        "daysInException": "5",
+        "gender": "זכר",
+        "corps": "חיל הטכנולוגיה והאחזקה",
+        "branch": "זרוע היבשה",
+        "rank": "סמל"
+      }
+    ]
   },
   "משרתי מילואים בעלי חוב מופת": {
     "explanation":[ 
@@ -114,13 +299,59 @@
       "- יכול לקחת מעט זמן עד שתרד החריגות מרגע תשלום החוב.",
       "- יש להבהיר לחייל כי לא יהיה זכאי למענקים והחזרי הוצאות נסיעה עד לאחר תשלום כלל החוב*"
     ],
-    "rows": []
+    "rows": [
+      {
+        "id": 6,
+        "personalNumber": "1234567",
+        "firstName": "ישראל",
+        "lastName": "ישראלי",
+        "exceptionStart": "14/05/2026",
+        "exceptionEnd": "20/06/2026",
+        "eventNumber": "1274",
+        "unit": "יחידה 405",
+        "daysInException": "37",
+        "gender": "זכר",
+        "corps": "חיל האוויר",
+        "branch": "זרוע האוויר והחלל",
+        "rank": "סמ״ר"
+      }
+    ]
   },
   "חסר השתתפות הוצאות נסיעה":{
     "explanation": "החריגות קופצת כשיש חייל שלא מוזן לו שיטת השתתפות בהוצאות נסיעה ( רכב / תחב\"צ). ברוב המקרים זה חיילים חדשים שנקלטים ליחידה.",
     "treatment": "יש להתקשר לחייל ולשאול אותו איך הוא מתכוון להגיע לזימונים הבאים שלו. לאחר מכן נדרש להזין את הבחירה שלו במערכת 'עמית'.",
     "flowchart": "drive",
-    "rows": []
+    "rows": [
+      {
+        "id": 6,
+        "personalNumber": "1234567",
+        "firstName": "ישראל",
+        "lastName": "ישראלי",
+        "exceptionStart": "14/05/2026",
+        "exceptionEnd": "20/06/2026",
+        "eventNumber": "1274",
+        "unit": "יחידה 405",
+        "daysInException": "37",
+        "gender": "זכר",
+        "corps": "חיל האוויר",
+        "branch": "זרוע האוויר והחלל",
+        "rank": "סמ״ר"
+      }, {
+        "id": 6,
+        "personalNumber": "1234567",
+        "firstName": "ישראל",
+        "lastName": "ישראלי",
+        "exceptionStart": "14/05/2026",
+        "exceptionEnd": "20/06/2026",
+        "eventNumber": "1274",
+        "unit": "יחידה 405",
+        "daysInException": "37",
+        "gender": "זכר",
+        "corps": "חיל האוויר",
+        "branch": "זרוע האוויר והחלל",
+        "rank": "סמ״ר"
+      }
+    ]
   },
   "דיווח שמ״פ לסוג איוש בלתי נקרא": {
     "explanation": [
@@ -135,23 +366,174 @@
     "explanation": "החריגות תעלה כשיש חייל בעל שלילת רישיון אזרחי שתפקידו בצבא הינו נהג - אינו רשאי לנהוג בזמן שמ\"פ.",
     "treatment": "הטיפול",
     "flowchart": "shlila",
-    "rows": []
+    "rows": [
+      {
+        "id": 7,
+        "personalNumber": "1234567",
+        "firstName": "ישראל",
+        "lastName": "ישראלי",
+        "exceptionStart": "29/08/2026",
+        "exceptionEnd": "",
+        "eventNumber": "1306",
+        "unit": "יחידה 621",
+        "daysInException": "9",
+        "gender": "זכר",
+        "corps": "חיל הים",
+        "branch": "זרוע הים",
+        "rank": "רב״ט"
+      }, {
+        "id": 7,
+        "personalNumber": "1234567",
+        "firstName": "ישראל",
+        "lastName": "ישראלי",
+        "exceptionStart": "29/08/2026",
+        "exceptionEnd": "",
+        "eventNumber": "1306",
+        "unit": "יחידה 621",
+        "daysInException": "9",
+        "gender": "זכר",
+        "corps": "חיל הים",
+        "branch": "זרוע הים",
+        "rank": "רב״ט"
+      }, {
+        "id": 7,
+        "personalNumber": "1234567",
+        "firstName": "ישראל",
+        "lastName": "ישראלי",
+        "exceptionStart": "29/08/2026",
+        "exceptionEnd": "",
+        "eventNumber": "1306",
+        "unit": "יחידה 621",
+        "daysInException": "9",
+        "gender": "זכר",
+        "corps": "חיל הים",
+        "branch": "זרוע הים",
+        "rank": "רב״ט"
+      }
+    ]
   },
   "תלונות מ״צ פתוחות": {
     "explanation": "החייל בעל תלונת מ\"צ פתוחה ללא הזנת פסק דין במערכת",
     "treatment": "הטיפול",
     "flowchart": "complaint",
-    "rows": []
+    "rows": [
+      {
+        "id": 8,
+        "personalNumber": "1234567",
+        "firstName": "ישראל",
+        "lastName": "ישראלי",
+        "exceptionStart": "09/07/2026",
+        "exceptionEnd": "",
+        "eventNumber": "1362",
+        "unit": "יחידה 289",
+        "daysInException": "33",
+        "gender": "זכר",
+        "corps": "חיל משאבי האנוש",
+        "branch": "אגף כוח האדם",
+        "rank": "רס״ר"
+      },
+      {
+        "id": 8,
+        "personalNumber": "1234567",
+        "firstName": "ישראל",
+        "lastName": "ישראלי",
+        "exceptionStart": "09/07/2026",
+        "exceptionEnd": "",
+        "eventNumber": "1362",
+        "unit": "יחידה 289",
+        "daysInException": "33",
+        "gender": "זכר",
+        "corps": "חיל משאבי האנוש",
+        "branch": "אגף כוח האדם",
+        "rank": "רס״ר"
+      },
+      {
+        "id": 8,
+        "personalNumber": "1234567",
+        "firstName": "ישראל",
+        "lastName": "ישראלי",
+        "exceptionStart": "09/07/2026",
+        "exceptionEnd": "",
+        "eventNumber": "1362",
+        "unit": "יחידה 289",
+        "daysInException": "33",
+        "gender": "זכר",
+        "corps": "חיל משאבי האנוש",
+        "branch": "אגף כוח האדם",
+        "rank": "רס״ר"
+      },
+      {
+        "id": 8,
+        "personalNumber": "1234567",
+        "firstName": "ישראל",
+        "lastName": "ישראלי",
+        "exceptionStart": "09/07/2026",
+        "exceptionEnd": "",
+        "eventNumber": "1362",
+        "unit": "יחידה 289",
+        "daysInException": "33",
+        "gender": "זכר",
+        "corps": "חיל משאבי האנוש",
+        "branch": "אגף כוח האדם",
+        "rank": "רס״ר"
+      }
+    ]
   },
   "חיילים בעלי עיכוב מצ״ח פתוח מעל שנתיים":{
     "explanation": "חייל בעל נגררת עיכוב מצ\"ח פתוחה מעל לשנתיים.",
     "treatment": "לטיפול בחריג יש ללפנות במייל ל'נתנאל בן נעים'- בעל התפקיד יסביר מדוע העיכוב פתוח וכיצד ניתן לזרז את סגירת הנגררת. ",
-    "rows": []
+    "rows": [
+      {
+        "id": 3,
+        "personalNumber": "1234567",
+        "firstName": "ישראל",
+        "lastName": "ישראלי",
+        "exceptionStart": "27/08/2026",
+        "exceptionEnd": "04/09/2026",
+        "eventNumber": "1123",
+        "unit": "יחידה 512",
+        "daysInException": "8",
+        "gender": "זכר",
+        "corps": "חיל התקשוב",
+        "branch": "אגף התקשוב וההגנה בסב״ר",
+        "rank": "רב״ט"
+      },
+      {
+        "id": 3,
+        "personalNumber": "1234567",
+        "firstName": "ישראל",
+        "lastName": "ישראלי",
+        "exceptionStart": "27/08/2026",
+        "exceptionEnd": "04/09/2026",
+        "eventNumber": "1123",
+        "unit": "יחידה 512",
+        "daysInException": "8",
+        "gender": "זכר",
+        "corps": "חיל התקשוב",
+        "branch": "אגף התקשוב וההגנה בסב״ר",
+        "rank": "רב״ט"
+      }
+    ]
   },
   "תהליך אירוע חריג ביחידה":{
     "explanation": "חייל הגיש בקשה למילוי דו\"ח אירוע חריג ביחידה והתהליך טרם טופל. כיוון שזה נושא רגיש יש לטפל באירוע במהירות האפשרית.",
     "treatment": "יש למלא את הדוח יחד עם החייל באופן טלפונית, לקבל התייחסות מפקד ולוודא כי כלל הגורמים הרלוונטיים ביחידה מכירים- מפקדים, קב\"ן ורופא יחידה במידת הצורך וכו'.",
-    "rows": []
+    "rows": [ {
+      "id": 1,
+      "personalNumber": "1234567",
+      "firstName": "ישראל",
+      "lastName": "ישראלי",
+      "exceptionStart": "03/08/2026",
+      "exceptionEnd": "",
+      "eventNumber": "1001",
+      "unit": "יחידה 214",
+      "daysInException": "12",
+      "gender": "זכר",
+      "corps": "חיל משאבי האנוש",
+      "branch": "זרוע היבשה",
+      "rank": "סמל"
+    }
+  ]
   },
   "ביצוע סיפוח מעל 70/90 יום - בייעוד עורפי/קדמי": {
     "explanation": "יציג משרתי מילואים בייעוד עורפי/קדמי אשר חורגים ממשך סיפוח המאושר לפי מדיניות ניהול משאב הימ\"מ.",
@@ -159,6 +541,36 @@
       "בשגרה - יש לצרף צילום מסך ממשימת השמ\"פ שאכן יצא צו ראשון, לאחר שאושרה הארכה במערכת.",
       "בחירום - יש לצרף אישור הארכת משך הסיפוח ע\"י עתכ\"א מילואים"
     ],
-    "rows": []
+    "rows": [  {
+      "id": 3,
+      "personalNumber": "1234567",
+      "firstName": "ישראל",
+      "lastName": "ישראלי",
+      "exceptionStart": "27/08/2026",
+      "exceptionEnd": "04/09/2026",
+      "eventNumber": "1123",
+      "unit": "יחידה 512",
+      "daysInException": "8",
+      "gender": "זכר",
+      "corps": "חיל התקשוב",
+      "branch": "אגף התקשוב וההגנה בסב״ר",
+      "rank": "רב״ט"
+    },
+    {
+      "id": 3,
+      "personalNumber": "1234567",
+      "firstName": "ישראל",
+      "lastName": "ישראלי",
+      "exceptionStart": "27/08/2026",
+      "exceptionEnd": "04/09/2026",
+      "eventNumber": "1123",
+      "unit": "יחידה 512",
+      "daysInException": "8",
+      "gender": "זכר",
+      "corps": "חיל התקשוב",
+      "branch": "אגף התקשוב וההגנה בסב״ר",
+      "rank": "רב״ט"
+    }
+  ]
   }
 }

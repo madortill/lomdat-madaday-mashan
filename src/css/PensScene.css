@@ -101,7 +101,7 @@
   visibility: hidden;
 
   pointer-events: none;
- z-index: 2;
+  z-index: 2;
   transition: opacity 0.18s ease;
 }
 
@@ -168,9 +168,6 @@
 
 /* ==================================
    הדמות
-
-   עכשיו היא ממוקמת ביחס ל-stage,
-   כלומר ביחס לתמונה עצמה.
 ================================== */
 
 .pens-scene-character {
@@ -190,12 +187,61 @@
 
 
 /* ==================================
-   כפתור חזור
+   הוראת הדמות - דינמית
+
+   השכבה מכסה רק את הטקסט שבתוך
+   בועת הדמות שב-SVG.
+
+   במחשב: עברו מעל העטים
+   במגע:   לחצו על העטים
 ================================== */
 
-/* =========================
+.pens-scene-character-instruction {
+  position: absolute;
+
+  left: 17.3%;
+  top: 69.1%;
+
+  width: 18.3%;
+  height: 14.6%;
+
+  z-index: 21;
+
+  padding: 0.2rem 0.35rem;
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  background: #DDF3FF;
+  color: #07435D;
+
+  direction: rtl;
+  text-align: center;
+
+  font-family: "rubik";
+  font-size: clamp(0.55rem, 1.3vw, 1.25rem);
+  line-height: 1.25;
+
+  pointer-events: none;
+  user-select: none;
+}
+
+.pens-scene-character-instruction strong {
+  font-family: "rubik-bold";
+  font-weight: 700;
+}
+
+.pens-scene-character-instruction span {
+  display: block;
+}
+
+
+/* ==================================
    כפתור חזור
-========================= */
+================================== */
 
 .pens-scene-back-button {
   position: absolute;
@@ -235,12 +281,6 @@
   transform: scale(0.97);
 }
 
-/* .pens-scene-back-hit:focus-visible {
-  outline: 0.18rem solid #50c2ff;
-  outline-offset: 0.15rem;
-  border-radius: 0.3rem;
-} */
-
 .title-pens {
   position: absolute;
 
@@ -261,16 +301,15 @@
   border: none;
   border-radius: 0.3rem;
 
-  /* background: #edf9ffc4; */
   color: #ffffff;
 
   font-family: "rubik-bold";
   font-size: 2rem;
   font-weight: 700;
-  /* transform: rotate(-19deg); */
 
   cursor: pointer;
 }
+
 .pen-check {
   position: absolute;
 
@@ -310,6 +349,7 @@
     transform: scale(1);
   }
 }
+
 .pen-check--yellow {
   left: 72%;
   top: 66%;
@@ -334,9 +374,9 @@
   left: 81%;
   top: 32.8%;
 }
+
 @media (prefers-reduced-motion: reduce) {
   .pens-scene-svg .pen-bubble {
     transition: none;
   }
 }
-

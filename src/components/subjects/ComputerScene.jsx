@@ -31,7 +31,7 @@ const REQUIRED_SYSTEM_STEPS = [
    זה הדבר היחיד שצריך לשנות.
 ===================================================== */
 
-const DEBUG_MODE = true;
+const DEBUG_MODE = false;
 
 /* ===================================================== */
 
@@ -53,6 +53,32 @@ const createDebugProgress = () => {
 };
 
 function ComputerScene({ onClose, onComplete }) {
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia(
+      "(hover: none), (pointer: coarse)"
+    );
+
+    const updateTouchMode = () => {
+      setIsTouchDevice(mediaQuery.matches);
+    };
+
+    updateTouchMode();
+
+    mediaQuery.addEventListener?.(
+      "change",
+      updateTouchMode
+    );
+
+    return () => {
+      mediaQuery.removeEventListener?.(
+        "change",
+        updateTouchMode
+      );
+    };
+  }, []);
+
   /*
     בדיבאג:
     נכנסים ישר לעמוד המערכת.
@@ -214,7 +240,9 @@ function ComputerScene({ onClose, onComplete }) {
         regular:
           "ככה נראית תמונת מצב עדכנית ביחידה במערכת מדדי משא״ן.",
         bold:
-          "עברו מעל שלושת גרפי העיגול",
+          isTouchDevice
+            ? "לחצו על שלושת גרפי העיגול"
+            : "עברו מעל שלושת גרפי העיגול",
       },
 
       graph: {
