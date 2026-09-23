@@ -956,8 +956,8 @@
 .exception-flowchart-modal {
   position: relative;
 
-  width: 80%;
-  height: 80%;
+  width: 60rem;
+  height: 100%;
 
   display: flex;
   align-items: center;
@@ -982,7 +982,7 @@
 ========================================== */
 
 .exception-flowchart-image {
-  max-width: 100%;
+  max-width: 60rem;
   max-height: 100%;
 
   object-fit: contain;

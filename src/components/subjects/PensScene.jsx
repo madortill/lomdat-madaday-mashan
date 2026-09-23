@@ -197,7 +197,7 @@ function PensScene({ onBack, onComplete }) {
             className="pens-scene-back-button"
             onClick={() => onBack?.()}
           >
-            חזור
+            לסיום
           </button>
         )}
       </div>
