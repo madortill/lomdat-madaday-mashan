@@ -1,0 +1,42 @@
+.mobile-overlay {
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(180deg, #bacaf5 0%, #67b1f6 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1.5rem;
+    z-index: 9999;
+  }
+  
+  .mobile-overlay-card {
+    width: 100%;
+    max-width: 22rem;
+    background: #ffffff;
+    color: #006692;
+    border-radius: 1.5rem;
+    padding: 2rem 1.5rem;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.18);
+    text-align: center;
+    border: 3px solid #DAE6F3;
+  }
+  
+  .mobile-overlay-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+  
+  .mobile-overlay-title {
+    font-family: "rubik-bold";
+    font-size: 1.7rem;
+    line-height: 1.3;
+    margin-bottom: 1rem;
+    color: #006692;
+  }
+  
+  .mobile-overlay-text {
+    font-family: "rubik";
+    font-size: 1.3rem;
+    line-height: 1.7;
+    color: #006692;
+  }

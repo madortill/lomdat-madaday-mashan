@@ -12,6 +12,8 @@ import EndScene from "./components/EndScene";
 import tilIcon from "./assets/images/tilIcon.svg";
 import bahad11Icon from "./assets/images/bahad11Icon.svg";
 
+import MobileWarningOverlay from "./components/MobileWarningOverlay";
+
 
 function App() {
   /*
@@ -110,6 +112,7 @@ function App() {
 
   return (
     <>
+    <MobileWarningOverlay />
       <div className="app">
 
         {/* =========================
