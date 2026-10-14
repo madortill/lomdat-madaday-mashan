@@ -2,8 +2,8 @@ import React, { useMemo } from "react";
 import "../css/EndScene.css";
 
 import endBackground from "../assets/images/backgrounds/end-screen.svg";
-import restartButton from "../assets/images/end/restart-button.svg";
-import continueButton from "../assets/images/end/continue-button.svg";
+import restartButton from "../assets/images/End/restart-button.svg";
+import continueButton from "../assets/images/End/continue-button.svg";
 
 function EndScene({
   onRestart,
