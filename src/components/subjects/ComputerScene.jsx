@@ -8,7 +8,7 @@ import detailsData from "../../data/exceptionDetailsData.json";
 import computerBg from "../../assets/images/backgrounds/computer.svg";
 import gearsAnimated from "../../assets/images/computer/gearsAnimated.svg";
 import logoMashan from "../../assets/images/computer/logo-mashan.png";
-import Character from "../../assets/images/computer/Character.svg";
+import Character from "../../assets/images/computer/character.svg";
 import pens from "../../assets/images/pens/Desktop - 32.svg"
 
 const TOTAL_EXCEPTIONS = Object.keys(detailsData).length;
