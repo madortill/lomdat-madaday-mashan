@@ -32,7 +32,7 @@ function EndScene({
               startLeft +
                 (((index * 17) % 55) - 27)
             )
-          );
+          ); 
   
         /* 
           הגובה שממנו כל חתיכה תתחיל ליפול
